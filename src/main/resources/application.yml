@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: "choco"
+    password: "aA232759"
+    url: "jdbc:postgresql:pgm-2zen2i7vk39wuhbsxo.pg.rds.aliyuncs.com:1921/TrainingOrg"
