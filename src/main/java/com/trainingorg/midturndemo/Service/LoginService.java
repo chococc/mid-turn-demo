@@ -1,5 +1,6 @@
 package com.trainingorg.midturndemo.Service;
 
+import com.trainingorg.midturndemo.Util.MysqlActuator;
 import com.trainingorg.midturndemo.Util.RequestMessage;
 import com.trainingorg.midturndemo.Util.Entity.UserEntity;
 import com.trainingorg.midturndemo.bean.*;
@@ -71,7 +72,6 @@ public class LoginService {
     }
 
     public List<UserEntity> user_selectAll() {
-        List<UserEntity> results = new MysqlActuator().getForList(UserEntity.class, "SELECT * from Users");
-        return results;
+        return new MysqlActuator().getForList(UserEntity.class, "SELECT * from Users");
     }
 }

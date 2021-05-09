@@ -1,4 +1,4 @@
-package com.trainingorg.midturndemo.bean;
+package com.trainingorg.midturndemo.Util;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

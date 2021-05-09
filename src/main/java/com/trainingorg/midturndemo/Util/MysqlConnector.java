@@ -1,4 +1,4 @@
-package com.trainingorg.midturndemo.bean;
+package com.trainingorg.midturndemo.Util;
 
 import com.trainingorg.midturndemo.Util.RequestMessage;
 

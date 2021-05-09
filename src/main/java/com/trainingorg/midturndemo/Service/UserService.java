@@ -1,7 +1,7 @@
 package com.trainingorg.midturndemo.Service;
 
 import com.trainingorg.midturndemo.bean.HttpRequest;
-import com.trainingorg.midturndemo.bean.MysqlActuator;
+import com.trainingorg.midturndemo.Util.MysqlActuator;
 import com.trainingorg.midturndemo.bean.Token;
 import org.springframework.stereotype.Service;
 

@@ -1,5 +1,6 @@
 package com.trainingorg.midturndemo.bean;
 
+import com.trainingorg.midturndemo.Util.MysqlActuator;
 import com.trainingorg.midturndemo.Util.RequestMessage;
 
 import java.sql.*;

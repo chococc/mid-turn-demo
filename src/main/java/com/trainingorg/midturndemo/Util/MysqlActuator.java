@@ -1,4 +1,4 @@
-package com.trainingorg.midturndemo.bean;
+package com.trainingorg.midturndemo.Util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
@@ -11,7 +11,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 /**
  * Mysql-SQL语句执行器
- * @Date 2021/5/6
+ * Date 2021/5/6
  * param MysqlConnector.con(java.sql.MysqlConnector)
  */
 public class MysqlActuator {
@@ -20,15 +20,15 @@ public class MysqlActuator {
     /**
      * update database(include:UPDATE INSERT DELETE ...)
      *
-     * @param sql
-     * @param args
+     * param sql
+     * param args
      */
     public void update(String sql, Object... args) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
             connection = mysqlConnector.getConnection();
-            preparedStatement = (PreparedStatement) connection
+            preparedStatement = connection
                     .prepareStatement(sql);
 
             for (int i = 0; i < args.length; i++) {
@@ -45,8 +45,8 @@ public class MysqlActuator {
 
     /**
      * Select database(Traditional)
-     * @param sql
-     * @return
+     * param sql
+     * return
      */
     public ResultSet getResultSet_Select(String sql){
         Connection connection=mysqlConnector.getConnection();
@@ -69,10 +69,10 @@ public class MysqlActuator {
     /**
      * select database(only one result)
      *
-     * @param clazz
-     * @param sql
-     * @param args
-     * @return
+     * param clazz
+     * param sql
+     * param args
+     * return
      */
     public <T> T get(Class<T> clazz, String sql, Object... args) {
         T entity = null;
@@ -82,7 +82,7 @@ public class MysqlActuator {
 
         try {
             connection = mysqlConnector.getConnection();
-            preparedStatement = (PreparedStatement) connection
+            preparedStatement = connection
                     .prepareStatement(sql);
             for (int i = 0; i < args.length; i++) {
                 preparedStatement.setObject(i + 1, args[i]);
@@ -90,9 +90,9 @@ public class MysqlActuator {
 
             result = preparedStatement.executeQuery();
 
-            Map<String, Object> map = new HashMap<String, Object>();
+            Map<String, Object> map = new HashMap<>();
 
-            ResultSetMetaData rsmd = (ResultSetMetaData) result.getMetaData();
+            ResultSetMetaData rsmd = result.getMetaData();
             if (result.next()) {
                 for (int i = 0; i < rsmd.getColumnCount(); i++) {
                     String columnLabel = rsmd.getColumnLabel(i + 1);
@@ -119,19 +119,19 @@ public class MysqlActuator {
     /**
      * select database(not only one result(include one result))
      *
-     * @param clazz
-     * @param sql
-     * @param args
-     * @return
+     * param clazz
+     * param sql
+     * param args
+     * return
      */
     public <T> List<T> getForList(Class<T> clazz, String sql, Object... args) {
-        List<T> list = new ArrayList<T>();
+        List<T> list = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet result = null;
         try {
             connection = mysqlConnector.getConnection();
-            preparedStatement = (PreparedStatement) connection
+            preparedStatement = connection
                     .prepareStatement(sql);
             for (int i = 0; i < args.length; i++) {
                 preparedStatement.setObject(i + 1, args[i]);
@@ -151,20 +151,20 @@ public class MysqlActuator {
 
     /**
      * Get Object into List.
-     * @param clazz
-     * @param values
-     * @return
-     * @throws InstantiationException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
+     * param clazz
+     * param values
+     * return
+     * throws InstantiationException
+     * throws IllegalAccessException
+     * throws InvocationTargetException
      */
     public <T> List<T> transfterMapListToBeanList(Class<T> clazz,
                                                   List<Map<String, Object>> values) throws InstantiationException,
             IllegalAccessException, InvocationTargetException {
 
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
 
-        T bean = null;
+        T bean;
 
         if (values.size() > 0) {
             for (Map<String, Object> m : values) {
@@ -185,19 +185,19 @@ public class MysqlActuator {
 
     /**
      * turn results to list.
-     * @param resultSet
-     * @return
-     * @throws SQLException
+     * param resultSet
+     * return
+     * throws SQLException
      */
     public List<Map<String, Object>> handleResultSetToMapList(
             ResultSet resultSet) throws SQLException {
-        List<Map<String, Object>> values = new ArrayList<Map<String, Object>>();
+        List<Map<String, Object>> values = new ArrayList<>();
 
         List<String> columnLabels = getColumnLabels(resultSet);
-        Map<String, Object> map = null;
+        Map<String, Object> map;
 
         while (resultSet.next()) {
-            map = new HashMap<String, Object>();
+            map = new HashMap<>();
 
             for (String columnLabel : columnLabels) {
                 Object value = resultSet.getObject(columnLabel);
@@ -210,15 +210,15 @@ public class MysqlActuator {
 
     /**
      *
-     * @param resultSet
-     * @return
-     * @throws SQLException
+     * param resultSet
+     * return
+     * throws SQLException
      */
     private List<String> getColumnLabels(ResultSet resultSet)
             throws SQLException {
-        List<String> labels = new ArrayList<String>();
+        List<String> labels = new ArrayList<>();
 
-        ResultSetMetaData rsmd = (ResultSetMetaData) resultSet.getMetaData();
+        ResultSetMetaData rsmd = resultSet.getMetaData();
         for (int i = 0; i < rsmd.getColumnCount(); i++) {
             labels.add(rsmd.getColumnLabel(i + 1));
         }
@@ -229,9 +229,9 @@ public class MysqlActuator {
     /**
      * 通用查询方法，返回一个值（可能是统计值）
      *
-     * @param sql
-     * @param args
-     * @return
+     * param sql
+     * param args
+     * return
      */
     @SuppressWarnings("unchecked")
     public <E> E getForValue(String sql, Object... args) {
@@ -240,7 +240,7 @@ public class MysqlActuator {
         ResultSet resultSet = null;
         try {
             connection = mysqlConnector.getConnection();
-            preparedStatement = (PreparedStatement) connection
+            preparedStatement = connection
                     .prepareStatement(sql);
             for (int i = 0; i < args.length; i++) {
                 preparedStatement.setObject(i + 1, args[i]);
