@@ -92,10 +92,10 @@ public class MysqlActuator {
 
             Map<String, Object> map = new HashMap<>();
 
-            ResultSetMetaData rsmd = result.getMetaData();
+            ResultSetMetaData resumed = result.getMetaData();
             if (result.next()) {
-                for (int i = 0; i < rsmd.getColumnCount(); i++) {
-                    String columnLabel = rsmd.getColumnLabel(i + 1);
+                for (int i = 0; i < resumed.getColumnCount(); i++) {
+                    String columnLabel = resumed.getColumnLabel(i + 1);
                     Object value = result.getObject(i + 1);
                     map.put(columnLabel, value);
                 }
@@ -140,7 +140,7 @@ public class MysqlActuator {
             result = preparedStatement.executeQuery();
 
             List<Map<String, Object>> values = handleResultSetToMapList(result);
-            list = transfterMapListToBeanList(clazz, values);
+            list = transferMapListToBeanList(clazz, values);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -158,8 +158,8 @@ public class MysqlActuator {
      * throws IllegalAccessException
      * throws InvocationTargetException
      */
-    public <T> List<T> transfterMapListToBeanList(Class<T> clazz,
-                                                  List<Map<String, Object>> values) throws InstantiationException,
+    public <T> List<T> transferMapListToBeanList(Class<T> clazz,
+                                                 List<Map<String, Object>> values) throws InstantiationException,
             IllegalAccessException, InvocationTargetException {
 
         List<T> result = new ArrayList<>();
@@ -218,9 +218,9 @@ public class MysqlActuator {
             throws SQLException {
         List<String> labels = new ArrayList<>();
 
-        ResultSetMetaData rsmd = resultSet.getMetaData();
-        for (int i = 0; i < rsmd.getColumnCount(); i++) {
-            labels.add(rsmd.getColumnLabel(i + 1));
+        ResultSetMetaData resume = resultSet.getMetaData();
+        for (int i = 0; i < resume.getColumnCount(); i++) {
+            labels.add(resume.getColumnLabel(i + 1));
         }
 
         return labels;
