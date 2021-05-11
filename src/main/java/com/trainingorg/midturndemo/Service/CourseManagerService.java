@@ -1,7 +1,6 @@
 package com.trainingorg.midturndemo.Service;
 
 import com.trainingorg.midturndemo.bean.Entity.CourseEntity;
-import com.trainingorg.midturndemo.bean.Entity.UserEntity;
 import com.trainingorg.midturndemo.bean.HttpRequest;
 import com.trainingorg.midturndemo.Util.MysqlActuator;
 import org.springframework.stereotype.Service;

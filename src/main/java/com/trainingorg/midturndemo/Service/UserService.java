@@ -95,8 +95,10 @@ public class UserService {
     }
 
     public HttpRequest editUsers_Customer_service(String name,String identity,String phone,String Org) {
+
         Token token = new Token();
         String edituser = token.getToken_Cookie();
+
         if (edituser == null) {
             httpRequest.setRequestCode(102);
             httpRequest.setRequestMessage("当前为未登入状态");
