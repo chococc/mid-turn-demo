@@ -12,6 +12,4 @@ public class UserEntity {
     public String getPassword(){return Password;}
     public void setStatus(int status){this.status=status;}
     public int getStatus(){return status;}
-
-    public UserEntity(){}
 }

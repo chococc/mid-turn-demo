@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.trainingorg.midturndemo.bean.Entity.CourseEntity;
 import org.apache.commons.beanutils.BeanUtils;
 
 /**
@@ -185,6 +186,7 @@ public class MysqlActuator {
             for (String columnLabel : columnLabels) {
                 Object value = resultSet.getObject(columnLabel);
                 map.put(columnLabel, value);
+                System.out.println(map);
             }
             values.add(map);
         }

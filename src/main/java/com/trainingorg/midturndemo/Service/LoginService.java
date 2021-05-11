@@ -88,4 +88,17 @@ public class LoginService {
         }
         return httpRequest;
     }
+
+    public HttpRequest user_selectByID_service(String username){
+        try {
+            httpRequest.setRequestData(new MysqlActuator().getForList(UserEntity.class, "SELECT * from Users where username='"+username+"'"));
+            httpRequest.setRequestCode(200);
+            httpRequest.setRequestMessage("用户信息拉取成功");
+        }catch (Exception e){
+            httpRequest.setRequestCode(104);
+            httpRequest.setRequestMessage("拉取用户信息失败");
+            e.printStackTrace();
+        }
+        return httpRequest;
+    }
 }
