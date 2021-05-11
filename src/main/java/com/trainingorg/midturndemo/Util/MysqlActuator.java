@@ -20,9 +20,7 @@ public class MysqlActuator {
 
     /**
      * update database(include:UPDATE INSERT DELETE ...)
-     *
-     * param sql
-     * param args
+     * param sql,args
      */
     public void update(String sql, Object... args) throws SQLException {
         Connection connection;
@@ -41,7 +39,7 @@ public class MysqlActuator {
     /**
      * Select database(Traditional)
      * param sql
-     * return
+     * return ResultSet
      */
     public ResultSet getResultSet_Select(String sql){
 
@@ -66,10 +64,8 @@ public class MysqlActuator {
     /**
      * select database(only one result)
      *
-     * param clazz
-     * param sql
-     * param args
-     * return
+     * param Object.clazz,sql,args
+     * return Object.class
      */
     public <T> T get(Class<T> clazz, String sql, Object... args) throws SQLException, InvocationTargetException, IllegalAccessException, InstantiationException {
 
@@ -108,11 +104,8 @@ public class MysqlActuator {
 
     /**
      * select database(not only one result(include one result))
-     *
-     * param clazz
-     * param sql
-     * param args
-     * return
+     * param Object.clazz,sql,args
+     * return Object
      */
     public <T> List<T> getForList(Class<T> clazz, String sql, Object... args) throws SQLException, InvocationTargetException, InstantiationException, IllegalAccessException {
 
@@ -137,12 +130,9 @@ public class MysqlActuator {
 
     /**
      * Get Object into List.
-     * param clazz
-     * param values
-     * return
-     * throws InstantiationException
-     * throws IllegalAccessException
-     * throws InvocationTargetException
+     * param clazz,values
+     * return List<Object>
+     * throws InstantiationException,IllegalAccessException,InvocationTargetException
      */
     public <T> List<T> transferMapListToBeanList(Class<T> clazz, List<Map<String, Object>> values) throws InstantiationException, IllegalAccessException, InvocationTargetException {
 
@@ -170,7 +160,7 @@ public class MysqlActuator {
     /**
      * turn results to list.
      * param resultSet
-     * return
+     * return values
      * throws SQLException
      */
     public List<Map<String, Object>> handleResultSetToMapList(ResultSet resultSet) throws SQLException {
@@ -195,7 +185,7 @@ public class MysqlActuator {
     /**
      *
      * param resultSet
-     * return
+     * return labels
      * throws SQLException
      */
     private List<String> getColumnLabels(ResultSet resultSet) throws SQLException {
@@ -212,9 +202,8 @@ public class MysqlActuator {
     /**
      * Traditional Result，return one value（count is available）
      *
-     * param sql
-     * param args
-     * return
+     * param sql,args
+     * return value
      */
     @SuppressWarnings("unchecked")
     public <E> E getForValue(String sql, Object... args) throws SQLException,NullPointerException {
