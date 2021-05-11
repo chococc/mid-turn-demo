@@ -1,11 +1,9 @@
 package com.trainingorg.midturndemo.Controller;
 
 import com.trainingorg.midturndemo.Service.LoginService;
-import com.trainingorg.midturndemo.bean.Entity.UserEntity;
 import com.trainingorg.midturndemo.bean.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 
 @RestController

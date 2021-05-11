@@ -1,8 +1,5 @@
 package com.trainingorg.midturndemo.Util;
 
-import com.trainingorg.midturndemo.Util.Cookies;
-import com.trainingorg.midturndemo.Util.MysqlActuator;
-import com.trainingorg.midturndemo.Util.RequestMessage;
 import com.trainingorg.midturndemo.bean.Authenticator;
 
 import java.sql.ResultSet;
