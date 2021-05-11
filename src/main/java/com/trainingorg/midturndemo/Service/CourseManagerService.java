@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 
-public class ClassManagerService {
+public class CourseManagerService {
 
     protected MysqlActuator mysqlActuator=new MysqlActuator();
     protected HttpRequest httpRequest=new HttpRequest();
