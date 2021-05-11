@@ -37,4 +37,14 @@ public class UserManageController {
     public HttpRequest edituser_Customer(@RequestParam(value = "name",required = false)String name,@RequestParam(value = "identity",required = false) String identity,@RequestParam(value = "phone",required = false) String phone,@RequestParam(value = "Org",required = false) String Org){
         return userService.editUsers_Customer_service(name,identity,phone,Org);
     }
+
+    @RequestMapping(value="selectAll")
+    public HttpRequest user_selectAll(){
+        return userService.selectUser_selectAll();
+    }
+
+    @RequestMapping(value = "selectByID")
+    public HttpRequest user_selectByID(@RequestParam(value = "username",required = false) String username){
+        return userService.selectUser_selectByID_service(username);
+    }
 }

@@ -17,7 +17,9 @@ public class LoginService {
         String Token;
 
         if(new Authenticator().Confirmer(username,password).getMessage().equals(new RequestMessage().LoginMessage_Success().getMessage())){
+
             Token=new Token().getToken_login(username,password);
+
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("登入成功");
             httpRequest.setRequestData(Token);
@@ -72,32 +74,6 @@ public class LoginService {
             httpRequest.setRequestCode(103);
             httpRequest.setRequestMessage("重置密码失败");
             System.out.println(e.getMessage());
-        }
-        return httpRequest;
-    }
-
-    public HttpRequest user_selectAll() {
-        try {
-            httpRequest.setRequestData(new MysqlActuator().getForList(UserEntity.class, "SELECT * from Users"));
-            httpRequest.setRequestCode(200);
-            httpRequest.setRequestMessage("用户信息拉取成功");
-        }catch (Exception e){
-            httpRequest.setRequestCode(104);
-            httpRequest.setRequestMessage("拉取用户信息失败");
-            e.printStackTrace();
-        }
-        return httpRequest;
-    }
-
-    public HttpRequest user_selectByID_service(String username){
-        try {
-            httpRequest.setRequestData(new MysqlActuator().getForList(UserEntity.class, "SELECT * from Users where username='"+username+"'"));
-            httpRequest.setRequestCode(200);
-            httpRequest.setRequestMessage("用户信息拉取成功");
-        }catch (Exception e){
-            httpRequest.setRequestCode(104);
-            httpRequest.setRequestMessage("拉取用户信息失败");
-            e.printStackTrace();
         }
         return httpRequest;
     }

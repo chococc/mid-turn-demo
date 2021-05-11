@@ -210,7 +210,7 @@ public class MysqlActuator {
     }
 
     /**
-     * 通用查询方法，返回一个值（可能是统计值）
+     * Traditional Result，return one value（count is available）
      *
      * param sql
      * param args

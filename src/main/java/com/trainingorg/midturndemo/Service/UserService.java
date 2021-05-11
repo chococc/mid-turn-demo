@@ -1,5 +1,6 @@
 package com.trainingorg.midturndemo.Service;
 
+import com.trainingorg.midturndemo.bean.Entity.UserEntity;
 import com.trainingorg.midturndemo.bean.HttpRequest;
 import com.trainingorg.midturndemo.Util.MysqlActuator;
 import com.trainingorg.midturndemo.Util.Token;
@@ -113,6 +114,32 @@ public class UserService {
                 httpRequest.setRequestMessage("用户信息修改失败");
                 System.out.println(e.getMessage());
             }
+        }
+        return httpRequest;
+    }
+
+    public HttpRequest selectUser_selectAll() {
+        try {
+            httpRequest.setRequestData(new MysqlActuator().getForList(UserEntity.class, "SELECT * from Users"));
+            httpRequest.setRequestCode(200);
+            httpRequest.setRequestMessage("用户信息拉取成功");
+        }catch (Exception e){
+            httpRequest.setRequestCode(104);
+            httpRequest.setRequestMessage("拉取用户信息失败");
+            e.printStackTrace();
+        }
+        return httpRequest;
+    }
+
+    public HttpRequest selectUser_selectByID_service(String username){
+        try {
+            httpRequest.setRequestData(new MysqlActuator().getForList(UserEntity.class, "SELECT * from Users where username='"+username+"'"));
+            httpRequest.setRequestCode(200);
+            httpRequest.setRequestMessage("用户信息拉取成功");
+        }catch (Exception e){
+            httpRequest.setRequestCode(104);
+            httpRequest.setRequestMessage("拉取用户信息失败");
+            e.printStackTrace();
         }
         return httpRequest;
     }
