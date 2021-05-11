@@ -1,4 +1,4 @@
-package com.trainingorg.midturndemo.Util.Entity;
+package com.trainingorg.midturndemo.bean.Entity;
 
 public class UserEntity {
 

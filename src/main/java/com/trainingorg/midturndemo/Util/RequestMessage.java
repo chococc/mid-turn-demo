@@ -65,7 +65,7 @@ public class RequestMessage {
     /**
      * Token Login message group
      * system message code 000002
-     * To com.trainingorg.midturndemo.bean.Token
+     * To com.trainingorg.midturndemo.Util.Token
      */
     public RequestMessage Token_Success(){
         RequestMessage RM=new RequestMessage();

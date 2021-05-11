@@ -2,7 +2,7 @@ package com.trainingorg.midturndemo.Service;
 
 import com.trainingorg.midturndemo.bean.HttpRequest;
 import com.trainingorg.midturndemo.Util.MysqlActuator;
-import com.trainingorg.midturndemo.bean.Token;
+import com.trainingorg.midturndemo.Util.Token;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;

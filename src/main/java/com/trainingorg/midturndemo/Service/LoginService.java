@@ -2,7 +2,8 @@ package com.trainingorg.midturndemo.Service;
 
 import com.trainingorg.midturndemo.Util.MysqlActuator;
 import com.trainingorg.midturndemo.Util.RequestMessage;
-import com.trainingorg.midturndemo.Util.Entity.UserEntity;
+import com.trainingorg.midturndemo.Util.Token;
+import com.trainingorg.midturndemo.bean.Entity.UserEntity;
 import com.trainingorg.midturndemo.bean.*;
 import org.springframework.stereotype.Service;
 

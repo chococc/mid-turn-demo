@@ -2,7 +2,7 @@ package com.trainingorg.midturndemo;
 
 import com.trainingorg.midturndemo.bean.Authenticator;
 import com.trainingorg.midturndemo.Util.MysqlConnector;
-import com.trainingorg.midturndemo.bean.Token;
+import com.trainingorg.midturndemo.Util.Token;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
