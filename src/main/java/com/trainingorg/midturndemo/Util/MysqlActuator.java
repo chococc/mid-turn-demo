@@ -27,16 +27,15 @@ public class MysqlActuator {
     public void update(String sql, Object... args) throws SQLException {
         Connection connection;
         PreparedStatement preparedStatement;
-            connection = mysqlConnector.getConnection();
-            preparedStatement = connection
-                    .prepareStatement(sql);
+        connection = mysqlConnector.getConnection();
+        preparedStatement = connection.prepareStatement(sql);
 
-            for (int i = 0; i < args.length; i++) {
-                preparedStatement.setObject(i + 1, args[i]);
-            }
+        for (int i = 0; i < args.length; i++) {
+            preparedStatement.setObject(i + 1, args[i]);
+        }
 
-            preparedStatement.executeUpdate();
-            mysqlConnector.release(preparedStatement, connection);
+        preparedStatement.executeUpdate();
+        mysqlConnector.release(preparedStatement, connection);
     }
 
     /**
@@ -45,9 +44,11 @@ public class MysqlActuator {
      * return
      */
     public ResultSet getResultSet_Select(String sql){
+
         Connection connection=mysqlConnector.getConnection();
         ResultSet rs;
         Statement stmt;
+
         try{
             stmt=connection.createStatement();
         }catch (Exception e){
@@ -71,22 +72,22 @@ public class MysqlActuator {
      * return
      */
     public <T> T get(Class<T> clazz, String sql, Object... args) throws SQLException, InvocationTargetException, IllegalAccessException, InstantiationException {
+
         T entity = null;
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet result;
         connection = mysqlConnector.getConnection();
-        preparedStatement = connection
-                    .prepareStatement(sql);
+
+        preparedStatement = connection.prepareStatement(sql);
             for (int i = 0; i < args.length; i++) {
                 preparedStatement.setObject(i + 1, args[i]);
             }
 
             result = preparedStatement.executeQuery();
-
             Map<String, Object> map = new HashMap<>();
-
             ResultSetMetaData resumed = result.getMetaData();
+
             if (result.next()) {
                 for (int i = 0; i < resumed.getColumnCount(); i++) {
                     String columnLabel = resumed.getColumnLabel(i + 1);
@@ -114,13 +115,14 @@ public class MysqlActuator {
      * return
      */
     public <T> List<T> getForList(Class<T> clazz, String sql, Object... args) throws SQLException, InvocationTargetException, InstantiationException, IllegalAccessException {
+
         List<T> list;
         Connection connection;
         PreparedStatement preparedStatement;
         ResultSet result;
         connection = mysqlConnector.getConnection();
-        preparedStatement = connection
-                            .prepareStatement(sql);
+        preparedStatement = connection.prepareStatement(sql);
+
         for (int i = 0; i < args.length; i++) {
             preparedStatement.setObject(i + 1, args[i]);
         }
@@ -142,9 +144,7 @@ public class MysqlActuator {
      * throws IllegalAccessException
      * throws InvocationTargetException
      */
-    public <T> List<T> transferMapListToBeanList(Class<T> clazz,
-                                                 List<Map<String, Object>> values) throws InstantiationException,
-            IllegalAccessException, InvocationTargetException {
+    public <T> List<T> transferMapListToBeanList(Class<T> clazz, List<Map<String, Object>> values) throws InstantiationException, IllegalAccessException, InvocationTargetException {
 
         List<T> result = new ArrayList<>();
 
@@ -173,8 +173,8 @@ public class MysqlActuator {
      * return
      * throws SQLException
      */
-    public List<Map<String, Object>> handleResultSetToMapList(
-            ResultSet resultSet) throws SQLException {
+    public List<Map<String, Object>> handleResultSetToMapList(ResultSet resultSet) throws SQLException {
+
         List<Map<String, Object>> values = new ArrayList<>();
 
         List<String> columnLabels = getColumnLabels(resultSet);
@@ -198,8 +198,8 @@ public class MysqlActuator {
      * return
      * throws SQLException
      */
-    private List<String> getColumnLabels(ResultSet resultSet)
-            throws SQLException {
+    private List<String> getColumnLabels(ResultSet resultSet) throws SQLException {
+
         List<String> labels = new ArrayList<>();
 
         ResultSetMetaData resume = resultSet.getMetaData();
@@ -223,8 +223,7 @@ public class MysqlActuator {
         ResultSet resultSet;
         connection = mysqlConnector.getConnection();
         try {
-            preparedStatement = connection
-                        .prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(sql);
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
