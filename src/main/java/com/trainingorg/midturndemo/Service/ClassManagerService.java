@@ -17,9 +17,11 @@ public class ClassManagerService {
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("课程添加成功"+coursename);
         }catch (Exception e){
+            e.printStackTrace();
             httpRequest.setRequestCode(301);
-            httpRequest.setRequestMessage("课程管理服务存在问题@addcourse:"+e.getMessage());
+            httpRequest.setRequestMessage("课程已存在"+e.getMessage());
         }
+
         return httpRequest;
     }
 
@@ -29,14 +31,23 @@ public class ClassManagerService {
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("课程删除成功："+coursename);
         }catch (Exception e){
-            httpRequest.setRequestCode(301);
+            e.printStackTrace();
+            httpRequest.setRequestCode(302);
             httpRequest.setRequestMessage("课程管理服务存在问题@deletecourse:"+e.getMessage());
         }
         return httpRequest;
     }
 
     public HttpRequest editCourseService(String coursename,String cost,String state){
-
+        try{
+            mysqlActuator.update("UPDATE CourseList SET coursename='"+coursename+"',courseCost="+cost+",courseState="+state+" where coursename='"+coursename+"'");
+            httpRequest.setRequestCode(200);
+            httpRequest.setRequestMessage("课程修改成功："+coursename);
+        }catch (Exception e){
+            e.printStackTrace();
+            httpRequest.setRequestData(303);
+            httpRequest.setRequestMessage("课程管理服务存在问题@editCourseService:"+e.getMessage());
+        }
         return httpRequest;
     }
 }

@@ -7,15 +7,15 @@ import com.trainingorg.midturndemo.bean.Entity.UserEntity;
 import com.trainingorg.midturndemo.bean.*;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class LoginService {
 
     protected HttpRequest httpRequest=new HttpRequest();
 
     public HttpRequest user_login_service(String username, String password){
+
         String Token;
+
         if(new Authenticator().Confirmer(username,password).getMessage().equals(new RequestMessage().LoginMessage_Success().getMessage())){
             Token=new Token().getToken_login(username,password);
             httpRequest.setRequestCode(200);
@@ -31,7 +31,9 @@ public class LoginService {
     }
 
     public HttpRequest check_login_service(){
+
         String Token=new Token().getToken_Cookie();
+
         if (Token!=null) {
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("当前请求已认证");
@@ -45,7 +47,9 @@ public class LoginService {
     }
 
     public HttpRequest logout_service(){
+
         String token = new Token().getToken_Cookie();
+
         if(token!=null){
             new Token().TokenDeleter(token);
             httpRequest.setRequestCode(200);
@@ -72,7 +76,16 @@ public class LoginService {
         return httpRequest;
     }
 
-    public List<UserEntity> user_selectAll() {
-        return new MysqlActuator().getForList(UserEntity.class, "SELECT * from Users");
+    public HttpRequest user_selectAll() {
+        try {
+            httpRequest.setRequestData(new MysqlActuator().getForList(UserEntity.class, "SELECT * from Users"));
+            httpRequest.setRequestCode(200);
+            httpRequest.setRequestMessage("用户信息拉取成功");
+        }catch (Exception e){
+            httpRequest.setRequestCode(104);
+            httpRequest.setRequestMessage("拉取用户信息失败");
+            e.printStackTrace();
+        }
+        return httpRequest;
     }
 }

@@ -23,10 +23,9 @@ public class MysqlActuator {
      * param sql
      * param args
      */
-    public void update(String sql, Object... args) {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        try {
+    public void update(String sql, Object... args) throws SQLException {
+        Connection connection;
+        PreparedStatement preparedStatement;
             connection = mysqlConnector.getConnection();
             preparedStatement = connection
                     .prepareStatement(sql);
@@ -36,11 +35,7 @@ public class MysqlActuator {
             }
 
             preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
             mysqlConnector.release(preparedStatement, connection);
-        }
     }
 
     /**
@@ -74,15 +69,13 @@ public class MysqlActuator {
      * param args
      * return
      */
-    public <T> T get(Class<T> clazz, String sql, Object... args) {
+    public <T> T get(Class<T> clazz, String sql, Object... args) throws SQLException, InvocationTargetException, IllegalAccessException, InstantiationException {
         T entity = null;
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet result = null;
-
-        try {
-            connection = mysqlConnector.getConnection();
-            preparedStatement = connection
+        Connection connection;
+        PreparedStatement preparedStatement;
+        ResultSet result;
+        connection = mysqlConnector.getConnection();
+        preparedStatement = connection
                     .prepareStatement(sql);
             for (int i = 0; i < args.length; i++) {
                 preparedStatement.setObject(i + 1, args[i]);
@@ -108,11 +101,6 @@ public class MysqlActuator {
                     BeanUtils.setProperty(entity, filedName, filedObject);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            mysqlConnector.release(result, preparedStatement, connection);
-        }
         return entity;
     }
 
@@ -124,28 +112,23 @@ public class MysqlActuator {
      * param args
      * return
      */
-    public <T> List<T> getForList(Class<T> clazz, String sql, Object... args) {
-        List<T> list = new ArrayList<>();
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet result = null;
-        try {
-            connection = mysqlConnector.getConnection();
-            preparedStatement = connection
-                    .prepareStatement(sql);
-            for (int i = 0; i < args.length; i++) {
-                preparedStatement.setObject(i + 1, args[i]);
-            }
-
-            result = preparedStatement.executeQuery();
-
-            List<Map<String, Object>> values = handleResultSetToMapList(result);
-            list = transferMapListToBeanList(clazz, values);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            mysqlConnector.release(result, preparedStatement, connection);
+    public <T> List<T> getForList(Class<T> clazz, String sql, Object... args) throws SQLException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        List<T> list;
+        Connection connection;
+        PreparedStatement preparedStatement;
+        ResultSet result;
+        connection = mysqlConnector.getConnection();
+        preparedStatement = connection
+                            .prepareStatement(sql);
+        for (int i = 0; i < args.length; i++) {
+            preparedStatement.setObject(i + 1, args[i]);
         }
+
+        result = preparedStatement.executeQuery();
+
+        List<Map<String, Object>> values = handleResultSetToMapList(result);
+        list = transferMapListToBeanList(clazz, values);
+        mysqlConnector.release(result, preparedStatement, connection);
         return list;
     }
 
@@ -222,7 +205,6 @@ public class MysqlActuator {
         for (int i = 0; i < resume.getColumnCount(); i++) {
             labels.add(resume.getColumnLabel(i + 1));
         }
-
         return labels;
     }
 
@@ -234,26 +216,27 @@ public class MysqlActuator {
      * return
      */
     @SuppressWarnings("unchecked")
-    public <E> E getForValue(String sql, Object... args) {
-        Connection connection = null;
+    public <E> E getForValue(String sql, Object... args) throws SQLException,NullPointerException {
+        Connection connection;
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
+        connection = mysqlConnector.getConnection();
         try {
-            connection = mysqlConnector.getConnection();
             preparedStatement = connection
-                    .prepareStatement(sql);
-            for (int i = 0; i < args.length; i++) {
-                preparedStatement.setObject(i + 1, args[i]);
-            }
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return (E) resultSet.getObject(1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            mysqlConnector.release(resultSet, preparedStatement, connection);
+                        .prepareStatement(sql);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
+        for (int i = 0; i < args.length; i++) {
+            assert preparedStatement != null;
+            preparedStatement.setObject(i + 1, args[i]);
+        }
+        assert preparedStatement != null;
+        resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            return (E) resultSet.getObject(1);
+        }
+        mysqlConnector.release(resultSet, preparedStatement, connection);
         return null;
     }
 }

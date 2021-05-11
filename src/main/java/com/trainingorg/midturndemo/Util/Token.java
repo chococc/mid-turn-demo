@@ -29,7 +29,11 @@ public class Token {
             RM=new RequestMessage().Token_Success();
             token = UUID.randomUUID().toString().replaceAll("-", "");
             //System.out.println(token);
-            mysqlActuator.update("UPDATE Users SET TokenId ='"+token+"' WHERE Username ="+username);
+            try {
+                mysqlActuator.update("UPDATE Users SET TokenId ='" + token + "' WHERE Username =" + username);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
         else {
             RM = new Authenticator().Confirmer(username, password);
@@ -76,7 +80,11 @@ public class Token {
      */
 
     public RequestMessage TokenDeleter(String Token){
-        mysqlActuator.update("UPDATE Users SET TokenId = null WHERE TokenId = '"+Token+"'");
+        try {
+            mysqlActuator.update("UPDATE Users SET TokenId = null WHERE TokenId = '"+Token+"'");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         RequestMessage RM = new RequestMessage().Token_Deleted();
         cookies.deleteCookie("Token");
         return RM;
@@ -93,7 +101,7 @@ public class Token {
                 return result.getString("Username");
             }
         }catch (Exception e){
-            return null;
+            e.printStackTrace();
         }
         return null;
     }

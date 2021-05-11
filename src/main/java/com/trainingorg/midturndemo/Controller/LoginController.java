@@ -28,5 +28,5 @@ public class LoginController {
     @RequestMapping("/iforgot")
     public HttpRequest user_reset_password(@RequestParam(value = "username",required = false)String username,@RequestParam(value = "password",required = false)String password){return loginService.user_reset_password(username,password);}
     @RequestMapping(value="selectAll")
-    public List<UserEntity> user_selectAll(){return loginService.user_selectAll();}
+    public HttpRequest user_selectAll(){return loginService.user_selectAll();}
 }

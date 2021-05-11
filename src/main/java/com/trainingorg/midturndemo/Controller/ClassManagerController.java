@@ -27,8 +27,8 @@ public class ClassManagerController {
     }
 
     @RequestMapping(value = "/editCourse")
-    public HttpRequest editCourse(@RequestParam(value = "coursename",required = false) String coursename,@RequestParam(value = "cost",required = false) String Cost,@RequestParam(value = "state",required = false) String state){
-        httpRequest=classManagerService.editCourseService(coursename,Cost,state);
+    public HttpRequest editCourse(@RequestParam(value = "coursename",required = false) String coursename,@RequestParam(value = "cost",required = false) String Cost,@RequestParam(value = "status",required = false) String status){
+        httpRequest=classManagerService.editCourseService(coursename,Cost,status);
         return httpRequest;
     }
 }
