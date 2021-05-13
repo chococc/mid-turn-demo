@@ -1,5 +1,6 @@
 package com.trainingorg.midturndemo.Service;
 
+import com.trainingorg.midturndemo.Util.TimeStamp;
 import com.trainingorg.midturndemo.bean.Entity.UserEntity;
 import com.trainingorg.midturndemo.bean.HttpRequest;
 import com.trainingorg.midturndemo.Util.MysqlActuator;
@@ -7,8 +8,6 @@ import com.trainingorg.midturndemo.Util.Token;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
 @Service
@@ -18,15 +17,12 @@ public class UserService {
     protected MysqlActuator mysqlActuator = new MysqlActuator();
     protected HttpRequest httpRequest=new HttpRequest();
 
-    public HttpRequest addUser_service(String username, String password) {
-        Date date = new Date();
-        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Timestamp dateTime = Timestamp.valueOf(simpleDate.format(date));
+    public HttpRequest addUserService(String username, String password) {
+        Timestamp timestamp= new TimeStamp().getNowTimestamp();
         try {
             if (!mysqlActuator.getResultSet_Select("SELECT * FROM Users where username='" + username + "'").next()) {
                 try {
-                    mysqlActuator.update("INSERT INTO Users VALUES('" + username + "','" + password + "',null)");
-                    mysqlActuator.update("INSERT INTO UsersInfo VALUES('" + username + "',null,null,null,'" + dateTime + "',null)");
+                    mysqlActuator.update("INSERT INTO Users(username,password,createdate) VALUES('" + username + "','" + password + "','"+timestamp+"',null)");
                     httpRequest.setRequestCode(200);
                     httpRequest.setRequestMessage("用户注册成功");
                 } catch (Exception e) {
@@ -44,7 +40,7 @@ public class UserService {
         return httpRequest;
     }
 
-    public HttpRequest deleteUser_service(String username) {
+    public HttpRequest deleteUserService(String username) {
         try {
             if (mysqlActuator.getResultSet_Select("SELECT * FROM Users where username='" + username + "'").next()) {
                 try {
@@ -67,7 +63,7 @@ public class UserService {
         return httpRequest;
     }
 
-    public HttpRequest deleteUserByToken_service() {
+    public HttpRequest deleteUserByTokenService() {
         String Token = new Token().getToken_Cookie();
         try {
             mysqlActuator.update("DELETE FROM Users where TokenId='" + Token + "'");
@@ -84,7 +80,7 @@ public class UserService {
 
     public HttpRequest editUsers_service(String username, String name, String identity, String phone, String Org) {
         try {
-            mysqlActuator.update("UPDATE UsersInfo SET NAME='" + name + "',identify='" + identity + "',telephone='" + phone + "',ORG='" + Org + "' where username='" + username + "'");
+            mysqlActuator.update("UPDATE Users SET NAME='" + name + "',identify='" + identity + "',telephone='" + phone + "',ORG='" + Org + "' where username='" + username + "'");
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("用户信息修改成功");
         } catch (Exception e) {
@@ -95,7 +91,7 @@ public class UserService {
         return httpRequest;
     }
 
-    public HttpRequest editUsers_Customer_service(String name,String identity,String phone,String Org) {
+    public HttpRequest editUsersCustomerService(String name, String identity, String phone, String Org) {
 
         Token token = new Token();
         String edituser = token.getToken_Cookie();
@@ -106,7 +102,7 @@ public class UserService {
         } else {
             try {
                 String edituser_username = token.Token2Username(edituser);
-                mysqlActuator.update("UPDATE UsersInfo SET NAME='" + name + "',identify='" + identity + "',telephone='" + phone + "',ORG='" + Org + "' where username='" + edituser_username + "'");
+                mysqlActuator.update("UPDATE Users SET NAME='" + name + "',identify='" + identity + "',telephone='" + phone + "',ORG='" + Org + "' where username='" + edituser_username + "'");
                 httpRequest.setRequestCode(200);
                 httpRequest.setRequestMessage("用户信息修改成功");
             } catch (Exception e) {
@@ -118,7 +114,7 @@ public class UserService {
         return httpRequest;
     }
 
-    public HttpRequest selectUser_selectAll() {
+    public HttpRequest selectUserSelectAll() {
         try {
             httpRequest.setRequestData(new MysqlActuator().getForList(UserEntity.class, "SELECT * from Users"));
             httpRequest.setRequestCode(200);
@@ -131,7 +127,7 @@ public class UserService {
         return httpRequest;
     }
 
-    public HttpRequest selectUser_selectByID_service(String username){
+    public HttpRequest selectUserSelectByIDService(String username){
         try {
             httpRequest.setRequestData(new MysqlActuator().getForList(UserEntity.class, "SELECT * from Users where username='"+username+"'"));
             httpRequest.setRequestCode(200);

@@ -15,17 +15,17 @@ public class UserManageController {
 
     @RequestMapping("/adduser")
     public HttpRequest adduser(@RequestParam(value="username",required = false) String username,@RequestParam(value="password",required = false) String password){
-        return userService.addUser_service(username,password);
+        return userService.addUserService(username,password);
     }
 
     @RequestMapping("/deleteUser")
     public HttpRequest deleteuser(@RequestParam(value="username",required = false) String username){
-        return userService.deleteUser_service(username);
+        return userService.deleteUserService(username);
     }
 
     @RequestMapping("/deleteuserByToken")
     public HttpRequest deleteuserByToken(){
-        return userService.deleteUserByToken_service();
+        return userService.deleteUserByTokenService();
     }
 
     @RequestMapping("/edituser4admin")
@@ -35,16 +35,16 @@ public class UserManageController {
 
     @RequestMapping("edituser4Customer")
     public HttpRequest edituser_Customer(@RequestParam(value = "name",required = false)String name,@RequestParam(value = "identity",required = false) String identity,@RequestParam(value = "phone",required = false) String phone,@RequestParam(value = "Org",required = false) String Org){
-        return userService.editUsers_Customer_service(name,identity,phone,Org);
+        return userService.editUsersCustomerService(name,identity,phone,Org);
     }
 
     @RequestMapping(value="selectAll")
     public HttpRequest user_selectAll(){
-        return userService.selectUser_selectAll();
+        return userService.selectUserSelectAll();
     }
 
     @RequestMapping(value = "selectByID")
     public HttpRequest user_selectByID(@RequestParam(value = "username",required = false) String username){
-        return userService.selectUser_selectByID_service(username);
+        return userService.selectUserSelectByIDService(username);
     }
 }
