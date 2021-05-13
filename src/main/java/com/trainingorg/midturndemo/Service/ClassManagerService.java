@@ -14,7 +14,7 @@ public class ClassManagerService {
     public HttpRequest addClassManagerService(String teacherId,String courseID,String startTime, String stopTime){
         ClassEntity classEntity=new ClassEntity(teacherId,courseID,startTime,stopTime);
         try{
-            mysqlActuator.update("INSERT INTO ClassList(teacherId,courseId,startTime,endTime) Values('"+classEntity.getTeacherId()+"','"+classEntity.getCourseId()+"','"+classEntity.getStartTime()+"','"+classEntity.getStopTime()+"')");
+            mysqlActuator.update("INSERT INTO classList(teacherId,courseId,startTime,endTime,courseName,teacherName) Values('"+classEntity.getTeacherId()+"','"+classEntity.getCourseId()+"','"+classEntity.getStartTime()+"','"+classEntity.getStopTime()+"','"+classEntity.getCourseName()+"','"+classEntity.getTeacherName()+"')");
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("班级创建成功");
         }catch (Exception e){

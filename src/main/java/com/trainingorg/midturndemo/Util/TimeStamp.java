@@ -19,7 +19,7 @@ public class TimeStamp {
         SimpleDateFormat simpleDate= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date;
         try {
-            date = simpleDate.parse(string);
+            date = simpleDate.parse(string+" 00:00:00");
             timestamp=Timestamp.valueOf(simpleDate.format(date));
         }catch (Exception e){
             e.printStackTrace();

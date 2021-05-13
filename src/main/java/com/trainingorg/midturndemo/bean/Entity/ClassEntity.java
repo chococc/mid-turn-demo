@@ -25,8 +25,12 @@ public class ClassEntity {
         this.teacherId=teacherId;
         this.courseId=courseId;
         try {
-            teacherName = mysqlActuator.getForValue("SELECT name from users where username='" + teacherId + "' AND identify='teacher'");
-            courseName = mysqlActuator.getForValue("SELECT coursename from courseList where courseID='"+courseId);
+            System.out.println("SELECT name from Users where username=" + teacherId + " AND identify='teacher'");
+            teacherName = mysqlActuator.get(UserEntity.class,"SELECT * from Users where username=" + teacherId + " AND identify='teacher'").getName();
+
+            System.out.println("SELECT courseName from CourseList where courseID="+courseId);
+            courseName = mysqlActuator.get(CourseEntity.class,"SELECT * from CourseList where courseID="+courseId).getCourseName();
+
         }catch (Exception e){
             e.printStackTrace();
             teacherName=null;
