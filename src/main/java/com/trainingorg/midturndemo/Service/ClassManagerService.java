@@ -1,5 +1,6 @@
 package com.trainingorg.midturndemo.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.trainingorg.midturndemo.Util.MysqlActuator;
 import com.trainingorg.midturndemo.bean.Entity.ClassEntity;
 import com.trainingorg.midturndemo.bean.HttpRequest;
@@ -48,6 +49,20 @@ public class ClassManagerService {
             e.printStackTrace();
             httpRequest.setRequestCode(403);
             httpRequest.setRequestMessage("课程信息修改失败");
+        }
+        return httpRequest;
+    }
+
+    public HttpRequest selectAll(){
+        try{
+
+            httpRequest.setRequestData(JSON.toJSON(mysqlActuator.getForList(ClassEntity.class,"SELECT * from classList")));
+            httpRequest.setRequestCode(200);
+            httpRequest.setRequestMessage("数据拉取成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            httpRequest.setRequestCode(404);
+            httpRequest.setRequestMessage("数据拉取失败");
         }
         return httpRequest;
     }

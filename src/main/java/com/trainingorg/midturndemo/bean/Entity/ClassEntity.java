@@ -21,6 +21,8 @@ public class ClassEntity {
     protected Timestamp startTime;
     protected Timestamp stopTime;
 
+    public ClassEntity(){}
+
     public ClassEntity(String teacherId,String courseId,String startTime,String stopTime) {
         this.teacherId=teacherId;
         this.courseId=courseId;

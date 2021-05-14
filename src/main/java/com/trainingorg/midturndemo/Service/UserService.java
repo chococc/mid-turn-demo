@@ -21,7 +21,7 @@ public class UserService {
         try {
             if (!mysqlActuator.getResultSet_Select("SELECT * FROM Users where username='" + username + "'").next()) {
                 try {
-                    mysqlActuator.update("INSERT INTO Users(username,password,createdate) VALUES('" + username + "','" + password + "','"+timestamp+"',null)");
+                    mysqlActuator.update("INSERT INTO Users(username,password,createDate) VALUES('" + username + "','" + password + "','"+timestamp+"',null)");
                     httpRequest.setRequestCode(200);
                     httpRequest.setRequestMessage("用户注册成功");
                 } catch (Exception e) {
