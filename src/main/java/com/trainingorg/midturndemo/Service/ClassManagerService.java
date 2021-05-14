@@ -55,7 +55,6 @@ public class ClassManagerService {
 
     public HttpRequest selectAll(){
         try{
-
             httpRequest.setRequestData(JSON.toJSON(mysqlActuator.getForList(ClassEntity.class,"SELECT * from classList")));
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("数据拉取成功");
