@@ -12,10 +12,10 @@ public class ClassManagerService {
     MysqlActuator mysqlActuator=new MysqlActuator();
     HttpRequest httpRequest=new HttpRequest();
 
-    public HttpRequest addClassManagerService(String teacherId,String courseID,String startTime, String stopTime){
-        ClassEntity classEntity=new ClassEntity(teacherId,courseID,startTime,stopTime);
+    public HttpRequest addClassManagerService(String teacherId,String courseID,int startWeek, int stopWeek){
+        ClassEntity classEntity=new ClassEntity(teacherId,courseID,startWeek,stopWeek);
         try{
-            mysqlActuator.update("INSERT INTO classList(teacherId,courseId,startWeek,endWeek,courseName,teacherName) Values('"+classEntity.getTeacherId()+"','"+classEntity.getCourseId()+"','"+classEntity.getStartWeek()+"','"+classEntity.getStopWeek()+"','"+classEntity.getCourseName()+"','"+classEntity.getTeacherName()+"')");
+            mysqlActuator.update("INSERT INTO classList(teacherId,courseId,startWeek,endWeek,courseName,teacherName) Values('"+classEntity.getTeacherId()+"','"+classEntity.getCourseId()+"','"+classEntity.getStartWeek()+"','"+classEntity.getEndWeek()+"','"+classEntity.getCourseName()+"','"+classEntity.getTeacherName()+"')");
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("班级创建成功");
         }catch (Exception e){
@@ -39,10 +39,10 @@ public class ClassManagerService {
         return httpRequest;
     }
 
-    public HttpRequest updateClassService(String teacherId,String courseID,String startTime, String stopTime){
+    public HttpRequest updateClassService(String teacherId,String courseID,int startTime, int stopTime){
         ClassEntity classEntity=new ClassEntity(teacherId,courseID,startTime,stopTime);
         try{
-            mysqlActuator.update("UPDATE classList SET teacherId='"+classEntity.getTeacherName()+"',courseId='"+classEntity.getCourseId()+"',startTime='"+classEntity.getStartWeek()+"',stopTime='"+classEntity.getStopWeek()+"',courseName='"+classEntity.getCourseName()+"',teacherName='"+classEntity.getTeacherName()+"'");
+            mysqlActuator.update("UPDATE classList SET teacherId='"+classEntity.getTeacherName()+"',courseId='"+classEntity.getCourseId()+"',startTime='"+classEntity.getStartWeek()+"',stopTime='"+classEntity.getEndWeek()+"',courseName='"+classEntity.getCourseName()+"',teacherName='"+classEntity.getTeacherName()+"'");
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("班级信息修改成功");
         }catch (Exception e){

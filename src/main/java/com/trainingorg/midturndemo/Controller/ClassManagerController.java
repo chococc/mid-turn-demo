@@ -12,8 +12,8 @@ public class ClassManagerController {
 
     ClassManagerService classManagerService=new ClassManagerService();
     @RequestMapping(value = "/add")
-    public HttpRequest addClassController(@RequestParam(value = "teacherID",required = false) String teacherID,@RequestParam(value = "courseID",required = false) String courseID,@RequestParam(value = "startTime",required = false) String startTime,@RequestParam(value = "stopTime",required = false) String stopTime){
-        return classManagerService.addClassManagerService(teacherID,courseID,startTime,stopTime);
+    public HttpRequest addClassController(@RequestParam(value = "teacherID",required = false) String teacherID,@RequestParam(value = "courseID",required = false) String courseID,@RequestParam(value = "startTime",required = false) int startWeek,@RequestParam(value = "stopTime",required = false) int stopWeek){
+        return classManagerService.addClassManagerService(teacherID,courseID,startWeek,stopWeek);
     }
 
     @RequestMapping(value = "/delete")
@@ -22,7 +22,7 @@ public class ClassManagerController {
     }
 
     @RequestMapping(value = "/update")
-    public HttpRequest updateClassController(@RequestParam(value = "teacherID",required = false) String teacherID,@RequestParam(value = "courseID",required = false) String courseID,@RequestParam(value = "startTime",required = false) String startTime,@RequestParam(value = "stopTime",required = false) String stopTime){
+    public HttpRequest updateClassController(@RequestParam(value = "teacherID",required = false) String teacherID,@RequestParam(value = "courseID",required = false) String courseID,@RequestParam(value = "startTime",required = false) int startTime,@RequestParam(value = "stopTime",required = false) int stopTime){
         return classManagerService.updateClassService(teacherID,courseID,startTime,stopTime);
     }
 

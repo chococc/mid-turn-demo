@@ -9,9 +9,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/stu")
 public class StudentController {
+
     StudentService studentService =new StudentService();
-    @RequestMapping(value = "/cc")
+
+    @RequestMapping(value = "/sc")
     public HttpRequest ChoseClass(@RequestParam(value = "classID",required = false) String classID){
         return studentService.choseClass(classID);
+    }
+
+    @RequestMapping(value="/schedule")
+    public HttpRequest schedule(){
+        return studentService.getTimeTable();
     }
 }

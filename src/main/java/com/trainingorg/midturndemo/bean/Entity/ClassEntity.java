@@ -4,7 +4,8 @@ import com.trainingorg.midturndemo.Util.MysqlActuator;
 import com.trainingorg.midturndemo.Util.TimeStamp;
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 
 @Data
 @Getter
@@ -18,12 +19,12 @@ public class ClassEntity {
     protected String courseId;
     protected String teacherName;
     protected String courseName;
-    protected String startWeek;
-    protected String stopWeek;
+    protected int startWeek;
+    protected int endWeek;
 
     public ClassEntity(){}
 
-    public ClassEntity(String teacherId,String courseId,String startTime,String stopTime) {
+    public ClassEntity(String teacherId,String courseId,int startTime,int stopTime) {
         this.teacherId=teacherId;
         this.courseId=courseId;
         try {
@@ -39,6 +40,11 @@ public class ClassEntity {
             courseName=null;
         }
         this.startWeek=startTime;
-        this.stopWeek=stopTime;
+        this.endWeek =stopTime;
+    }
+
+    public boolean stillOn(int week,String classid) throws SQLException, InvocationTargetException, IllegalAccessException, InstantiationException {
+        ClassEntity classEntity=new MysqlActuator().get(ClassEntity.class,"SELECT * FROM classList where classid='"+classid+"'");
+        return week>classEntity.startWeek&&week<classEntity.endWeek;
     }
 }
