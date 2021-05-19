@@ -91,8 +91,9 @@ public class Token {
         return TokenDeleter(token);
     }
 
-    public String Token2Username(String Token){
+    public String Token2Username(){
         try {
+            String Token=getToken_Cookie();
             ResultSet result = mysqlActuator.getResultSet_Select("SELECT Username FROM Users WHERE TokenId='"+Token+"' AND TokenId is not null");
             if(result.next()){
                 return result.getString("Username");

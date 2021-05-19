@@ -15,7 +15,7 @@ public class ClassManagerService {
     public HttpRequest addClassManagerService(String teacherId,String courseID,String startTime, String stopTime){
         ClassEntity classEntity=new ClassEntity(teacherId,courseID,startTime,stopTime);
         try{
-            mysqlActuator.update("INSERT INTO classList(teacherId,courseId,startTime,endTime,courseName,teacherName) Values('"+classEntity.getTeacherId()+"','"+classEntity.getCourseId()+"','"+classEntity.getStartTime()+"','"+classEntity.getStopTime()+"','"+classEntity.getCourseName()+"','"+classEntity.getTeacherName()+"')");
+            mysqlActuator.update("INSERT INTO classList(teacherId,courseId,startWeek,endWeek,courseName,teacherName) Values('"+classEntity.getTeacherId()+"','"+classEntity.getCourseId()+"','"+classEntity.getStartWeek()+"','"+classEntity.getStopWeek()+"','"+classEntity.getCourseName()+"','"+classEntity.getTeacherName()+"')");
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("班级创建成功");
         }catch (Exception e){
@@ -42,7 +42,7 @@ public class ClassManagerService {
     public HttpRequest updateClassService(String teacherId,String courseID,String startTime, String stopTime){
         ClassEntity classEntity=new ClassEntity(teacherId,courseID,startTime,stopTime);
         try{
-            mysqlActuator.update("UPDATE classList SET teacherId='"+classEntity.getTeacherName()+"',courseId='"+classEntity.getCourseId()+"',startTime='"+classEntity.getStartTime()+"',stopTime='"+classEntity.getStopTime()+"',courseName='"+classEntity.getCourseName()+"',teacherName='"+classEntity.getTeacherName()+"'");
+            mysqlActuator.update("UPDATE classList SET teacherId='"+classEntity.getTeacherName()+"',courseId='"+classEntity.getCourseId()+"',startTime='"+classEntity.getStartWeek()+"',stopTime='"+classEntity.getStopWeek()+"',courseName='"+classEntity.getCourseName()+"',teacherName='"+classEntity.getTeacherName()+"'");
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("班级信息修改成功");
         }catch (Exception e){

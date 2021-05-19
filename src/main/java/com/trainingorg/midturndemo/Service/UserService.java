@@ -100,7 +100,7 @@ public class UserService {
             httpRequest.setRequestMessage("当前为未登入状态");
         } else {
             try {
-                String edituser_username = token.Token2Username(edituser);
+                String edituser_username = token.Token2Username();
                 mysqlActuator.update("UPDATE Users SET NAME='" + name + "',identify='" + identity + "',telephone='" + phone + "',ORG='" + Org + "' where username='" + edituser_username + "'");
                 httpRequest.setRequestCode(200);
                 httpRequest.setRequestMessage("用户信息修改成功");

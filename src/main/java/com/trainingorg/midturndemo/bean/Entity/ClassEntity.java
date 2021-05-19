@@ -18,8 +18,8 @@ public class ClassEntity {
     protected String courseId;
     protected String teacherName;
     protected String courseName;
-    protected Timestamp startTime;
-    protected Timestamp stopTime;
+    protected String startWeek;
+    protected String stopWeek;
 
     public ClassEntity(){}
 
@@ -38,7 +38,7 @@ public class ClassEntity {
             teacherName=null;
             courseName=null;
         }
-        this.startTime=timeStamp.getTimestamp(startTime);
-        this.stopTime=timeStamp.getTimestamp(stopTime);
+        this.startWeek=startTime;
+        this.stopWeek=stopTime;
     }
 }
