@@ -5,6 +5,7 @@ import com.trainingorg.midturndemo.bean.Entity.UserEntity;
 import com.trainingorg.midturndemo.bean.HttpRequest;
 import com.trainingorg.midturndemo.Util.MysqlActuator;
 import com.trainingorg.midturndemo.Util.Token;
+import com.trainingorg.midturndemo.dao.LoginUserManagerDao;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -13,15 +14,16 @@ import java.sql.Timestamp;
 
 public class UserService {
 
+    protected LoginUserManagerDao loginUserManagerDao=new LoginUserManagerDao();
     protected MysqlActuator mysqlActuator = new MysqlActuator();
     protected HttpRequest httpRequest=new HttpRequest();
 
     public HttpRequest addUserService(String username, String password) {
         Timestamp timestamp= new TimeStamp().getNowTimestamp();
         try {
-            if (!mysqlActuator.getResultSet_Select("SELECT * FROM Users where username='" + username + "'").next()) {
+            if (!loginUserManagerDao.existID(username)) {
                 try {
-                    mysqlActuator.update("INSERT INTO Users(username,password,createDate) VALUES('" + username + "','" + password + "','"+timestamp+"',null)");
+                    loginUserManagerDao.adduser(username,password,timestamp);
                     httpRequest.setRequestCode(200);
                     httpRequest.setRequestMessage("用户注册成功");
                 } catch (Exception e) {
@@ -41,7 +43,7 @@ public class UserService {
 
     public HttpRequest deleteUserService(String username) {
         try {
-            if (mysqlActuator.getResultSet_Select("SELECT * FROM Users where username='" + username + "'").next()) {
+            if (loginUserManagerDao.existID(username)) {
                 try {
                     mysqlActuator.update("DELETE FROM Users where Username='" + username + "'");
                     httpRequest.setRequestCode(200);
