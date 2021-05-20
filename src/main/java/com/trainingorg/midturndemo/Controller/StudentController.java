@@ -18,7 +18,7 @@ public class StudentController {
     }
 
     @RequestMapping(value="/schedule")
-    public HttpRequest schedule(){
-        return studentService.getTimeTable();
+    public HttpRequest schedule(@RequestParam(value = "instance",required = false) String instance){
+        return studentService.getTimeTable(instance);
     }
 }

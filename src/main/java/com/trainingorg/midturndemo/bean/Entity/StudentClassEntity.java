@@ -8,9 +8,9 @@ import lombok.Setter;
 @Setter
 @Getter
 public class StudentClassEntity {
-    protected String studentid;
-    protected String studentname;
-    protected String classid;
-    protected String evaluationstate;
+    protected String studentId;
+    protected String studentName;
+    protected String classId;
+    protected String evaluationState;
     protected String grade;
 }
