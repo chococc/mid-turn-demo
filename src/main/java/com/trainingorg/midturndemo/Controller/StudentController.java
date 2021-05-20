@@ -21,4 +21,9 @@ public class StudentController {
     public HttpRequest schedule(@RequestParam(value = "instance",required = false) String instance){
         return studentService.getTimeTable(instance);
     }
+
+    @RequestMapping(value="/selectAll")
+    public HttpRequest selectAll(){
+        return studentService.selectAll();
+    }
 }

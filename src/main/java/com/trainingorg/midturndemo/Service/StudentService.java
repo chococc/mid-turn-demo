@@ -62,4 +62,19 @@ public class StudentService {
         //System.out.println(todayClass);
         return httpRequest;
     }
+
+    public HttpRequest selectAll(){
+        Token token=new Token();
+        String username=token.Token2Username();
+        try {
+            httpRequest.setRequestCode(200);
+            httpRequest.setRequestData(mysqlActuator.getForList(StudentClassEntity.class,"SELECT * from studentClass where studentId='" + username + "'"));
+            httpRequest.setRequestMessage("查询成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            httpRequest.setRequestCode(503);
+            httpRequest.setRequestMessage("查询失败");
+        }
+        return httpRequest;
+    }
 }
