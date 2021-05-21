@@ -8,8 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 
 @Data
-@Getter
-@Setter
+
 public class ClassEntity {
 
     MysqlActuator mysqlActuator=new MysqlActuator();

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/stu")
+
 public class StudentController {
 
     StudentService studentService =new StudentService();

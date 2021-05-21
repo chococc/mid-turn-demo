@@ -3,8 +3,7 @@ package com.trainingorg.midturndemo.bean.Entity;
 import lombok.*;
 
 @Data
-@Setter
-@Getter
+
 public class CourseEntity {
 
     protected String courseName;
