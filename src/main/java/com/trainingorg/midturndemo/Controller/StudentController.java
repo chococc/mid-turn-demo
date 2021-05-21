@@ -26,4 +26,19 @@ public class StudentController {
     public HttpRequest selectAll(){
         return studentService.selectAll();
     }
+
+    @RequestMapping(value = "/getPayList")
+    public HttpRequest getPayList(){
+        return studentService.getCost();
+    }
+
+    @RequestMapping(value = "/pay")
+    public HttpRequest pay(){
+        return studentService.getPay();
+    }
+
+    @RequestMapping(value = "/delete")
+    public HttpRequest delete(@RequestParam(value = "classID",required = false)String classID){
+        return studentService.deleteClass(classID);
+    }
 }

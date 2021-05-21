@@ -5,6 +5,7 @@ import com.trainingorg.midturndemo.Util.MysqlActuator;
 import com.trainingorg.midturndemo.Util.TimeStamp;
 import com.trainingorg.midturndemo.Util.Token;
 import com.trainingorg.midturndemo.bean.Entity.ClassEntity;
+import com.trainingorg.midturndemo.bean.Entity.CourseEntity;
 import com.trainingorg.midturndemo.bean.Entity.StudentClassEntity;
 import com.trainingorg.midturndemo.bean.Entity.UserEntity;
 import com.trainingorg.midturndemo.bean.HttpRequest;
@@ -60,6 +61,61 @@ public class StudentService {
             httpRequest.setRequestMessage("查询失败");
         }
         //System.out.println(todayClass);
+        return httpRequest;
+    }
+
+    public HttpRequest getCost(){
+        Token token=new Token();
+        String username=token.Token2Username();
+        List<StudentClassEntity> notPayList;
+        ClassEntity classEntity;
+        CourseEntity course;
+        int total=0;
+        try{
+            notPayList=mysqlActuator.getForList(StudentClassEntity.class,"SELECT * from studentClass where studentId='"+username+"' and pay=0");
+            for(StudentClassEntity studentClassEntity:notPayList){
+                classEntity=mysqlActuator.get(ClassEntity.class,"SELECT * from classList where classID='"+studentClassEntity.getClassId()+"'");
+                course=mysqlActuator.get(CourseEntity.class,"SELECT * from CourseList where courseID='"+classEntity.getCourseId()+"'");
+                total+=course.getCourseCost();
+            }
+            httpRequest.setRequestMessage("共计需支付 "+total+" 元");
+            httpRequest.setRequestCode(200);
+            httpRequest.setRequestData(notPayList);
+        }catch (Exception e){
+            e.printStackTrace();
+            httpRequest.setRequestCode(504);
+            httpRequest.setRequestMessage("查询失败");
+        }
+        return httpRequest;
+    }
+
+    public HttpRequest deleteClass(String classID){
+        Token token=new Token();
+        String username=token.Token2Username();
+        try{
+            mysqlActuator.update("DELETE from studentClass where studentID='"+username+"' and classID='"+classID+"'");
+            httpRequest.setRequestMessage("删除成功");
+            httpRequest.setRequestCode(200);
+        }catch (Exception e){
+            e.printStackTrace();
+            httpRequest.setRequestCode(505);
+            httpRequest.setRequestMessage("删除失败");
+        }
+        return httpRequest;
+    }
+
+    public HttpRequest getPay(){
+        Token token=new Token();
+        String username= token.Token2Username();
+        try {
+            mysqlActuator.update("UPDATE studentClass SET pay=1 where studentID='"+username+"'");
+            httpRequest.setRequestMessage("支付成功");
+            httpRequest.setRequestCode(200);
+        }catch (Exception e){
+            e.printStackTrace();
+            httpRequest.setRequestMessage("支付失败");
+            httpRequest.setRequestCode(506);
+        }
         return httpRequest;
     }
 
