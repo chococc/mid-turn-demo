@@ -1,20 +1,19 @@
 package com.trainingorg.midturndemo.Service;
 
-import com.trainingorg.midturndemo.bean.Entity.CourseEntity;
 import com.trainingorg.midturndemo.bean.HttpRequest;
-import com.trainingorg.midturndemo.Util.MysqlActuator;
+import com.trainingorg.midturndemo.dao.CourseManageDao;
 import org.springframework.stereotype.Service;
 
 @Service
 
 public class CourseManagerService {
 
-    protected MysqlActuator mysqlActuator=new MysqlActuator();
+    protected CourseManageDao courseManageDao=new CourseManageDao();
     protected HttpRequest httpRequest=new HttpRequest();
 
     public HttpRequest addCourseService(String coursename){
         try {
-            mysqlActuator.update("INSERT INTO CourseList(courseName) Values('" + coursename + "')");
+            courseManageDao.addCourse(coursename);
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("课程添加成功"+coursename);
         }catch (Exception e){
@@ -28,7 +27,7 @@ public class CourseManagerService {
 
     public HttpRequest deleteCourseService(String coursename){
         try {
-            mysqlActuator.update("DELETE FROM CourseList where courseName='" + coursename + "'");
+            courseManageDao.deleteCourse(coursename);
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("课程删除成功："+coursename);
         }catch (Exception e){
@@ -41,7 +40,7 @@ public class CourseManagerService {
 
     public HttpRequest editCourseService(String coursename,String cost,String state){
         try{
-            mysqlActuator.update("UPDATE CourseList SET coursename='"+coursename+"',courseCost="+cost+",courseState="+state+" where coursename='"+coursename+"'");
+            courseManageDao.editCourse(coursename,cost,state);
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("课程修改成功："+coursename);
         }catch (Exception e){
@@ -54,7 +53,7 @@ public class CourseManagerService {
 
     public HttpRequest selectAllService(){
         try {
-            httpRequest.setRequestData(new MysqlActuator().getForList(CourseEntity.class, "SELECT * from CourseList"));
+            httpRequest.setRequestData(courseManageDao.selectAll());
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("用户信息拉取成功");
         }catch (Exception e){
@@ -69,7 +68,7 @@ public class CourseManagerService {
         try{
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("数据拉取成功");
-            httpRequest.setRequestData(mysqlActuator.getForList(CourseEntity.class,"SELECT * FROM CourseList where courseName LIKE '"+courseName+"'"));
+            httpRequest.setRequestData(courseManageDao.selectByID(courseName));
         }catch (Exception e){
             e.printStackTrace();
             httpRequest.setRequestCode(306);

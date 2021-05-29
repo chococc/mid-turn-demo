@@ -26,5 +26,7 @@ public class LoginUserManagerDao {
         return mysqlActuator.getResultSet_Select("SELECT * from users where username='"+id+"'").next();
     }
 
-
+    public void resetPassword(String username,String password) throws SQLException {
+        mysqlActuator.update("UPDATE Users SET password = '"+password+"'where Username='"+username+"'");
+    }
 }

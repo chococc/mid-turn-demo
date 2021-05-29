@@ -4,6 +4,7 @@ import com.trainingorg.midturndemo.Util.MysqlActuator;
 import com.trainingorg.midturndemo.Util.RequestMessage;
 import com.trainingorg.midturndemo.Util.Token;
 import com.trainingorg.midturndemo.bean.*;
+import com.trainingorg.midturndemo.dao.LoginUserManagerDao;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -47,6 +48,12 @@ public class LoginService {
         return httpRequest;
     }
 
+    public void check_login_service_strong() throws check_login_service_strong_Exception {
+        String Token=new Token().getToken_Cookie();
+        if(Token==null)
+            throw new check_login_service_strong_Exception();
+    }
+
     public HttpRequest logout_service(){
 
         String token = new Token().getToken_Cookie();
@@ -57,7 +64,6 @@ public class LoginService {
             httpRequest.setRequestMessage("用户成功登出");
         }else{
             httpRequest.setRequestCode(102);
-
         }
         httpRequest.setRequestData(null);
 
@@ -66,7 +72,7 @@ public class LoginService {
 
     public HttpRequest user_reset_password(String username,String password){
         try{
-            new MysqlActuator().update("UPDATE Users SET password = '"+password+"'where Username='"+username+"'");
+            new LoginUserManagerDao().resetPassword(username,password);
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("已成功重置密码");
         }catch (Exception e){
@@ -75,5 +81,11 @@ public class LoginService {
             System.out.println(e.getMessage());
         }
         return httpRequest;
+    }
+}
+
+class check_login_service_strong_Exception extends Exception{
+    public check_login_service_strong_Exception() {
+        super("当前请求未登入");
     }
 }
