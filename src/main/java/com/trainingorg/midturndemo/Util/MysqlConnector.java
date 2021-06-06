@@ -19,7 +19,7 @@ public class MysqlConnector {
     protected RequestMessage tryConnection(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://39.103.196.184:3306/TrainingOrg","root","123456");
+            con = DriverManager.getConnection("jdbc:mysql://39.103.196.184:3306/TrainingOrg","root","Kinoko@7");
             return new RequestMessage().DataSource_Success();
         }catch(Exception e){
             return new RequestMessage().DataSource_Error(e);
