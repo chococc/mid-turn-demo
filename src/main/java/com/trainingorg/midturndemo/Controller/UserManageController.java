@@ -18,12 +18,12 @@ public class UserManageController {
         return userService.addUserService(username,password);
     }
 
-    @RequestMapping("/deleteUser")
+    @RequestMapping("/delete")
     public HttpRequest deleteuser(@RequestParam(value="username",required = false) String username){
         return userService.deleteUserService(username);
     }
 
-    @RequestMapping("/deleteuserByToken")
+    @RequestMapping("/deleteByToken")
     public HttpRequest deleteuserByToken(){
         return userService.deleteUserByTokenService();
     }
