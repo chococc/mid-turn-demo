@@ -2,13 +2,10 @@ package com.trainingorg.midturndemo.dao;
 
 import com.trainingorg.midturndemo.Util.MysqlActuator;
 import com.trainingorg.midturndemo.bean.Entity.UserEntity;
-import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-
-@Service
 
 public class LoginUserManagerDao {
 
