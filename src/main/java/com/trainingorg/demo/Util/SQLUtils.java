@@ -27,7 +27,7 @@ public class SQLUtils {
             }
             // 操作标识 默认为 select
             String operations = "select";
-            StringBuilder condition = new StringBuilder(" a.* from " + tableName + " a where ");
+            StringBuilder condition = new StringBuilder(" * from " + tableName + " a where ");
             if (operation != null && !operation.equals("")) {
                 switch (operation) {
                     case "update":
@@ -65,11 +65,11 @@ public class SQLUtils {
                 if (next.getKey().toString().lastIndexOf("Key_") == -1) {
                     if (!operations.equals("insert")) {
                         if (operations.equals("select") || operations.equals("delete")) {
-                            condition.append(link).append("a.").append(next.getKey());
+                            condition.append(link).append(next.getKey());
                             condition.append("=").append(value);
                             link = " and ";
                         } else {
-                            condition.append(link).append("a.").append(next.getKey());
+                            condition.append(link).append(next.getKey());
                             condition.append("=").append(value);
                             link = ",";
                         }
@@ -95,7 +95,7 @@ public class SQLUtils {
                     String key = next.getKey().toString();
                     if (key.lastIndexOf("Key_") != -1) {
                         key = key.substring(key.indexOf("Key_") + 4);
-                        condition.append(and).append("a.").append(key).append("=").append(value);
+                        condition.append(and).append(key).append("=").append(value);
                         and = " and ";
                     }
                 }

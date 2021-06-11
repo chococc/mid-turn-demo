@@ -11,11 +11,11 @@ public class CourseManagerService {
     protected CourseManageDao courseManageDao=new CourseManageDao();
     protected HttpRequest httpRequest=new HttpRequest();
 
-    public HttpRequest addCourseService(String coursename){
+    public HttpRequest addCourseService(String courseName){
         try {
-            courseManageDao.addCourse(coursename);
+            courseManageDao.addCourse(courseName);
             httpRequest.setRequestCode(200);
-            httpRequest.setRequestMessage("课程添加成功"+coursename);
+            httpRequest.setRequestMessage("课程添加成功"+courseName);
         }catch (Exception e){
             e.printStackTrace();
             httpRequest.setRequestCode(301);
@@ -25,11 +25,11 @@ public class CourseManagerService {
         return httpRequest;
     }
 
-    public HttpRequest deleteCourseService(String coursename){
+    public HttpRequest deleteCourseService(String courseName){
         try {
-            courseManageDao.deleteCourse(coursename);
+            courseManageDao.deleteCourse(courseName);
             httpRequest.setRequestCode(200);
-            httpRequest.setRequestMessage("课程删除成功："+coursename);
+            httpRequest.setRequestMessage("课程删除成功："+courseName);
         }catch (Exception e){
             e.printStackTrace();
             httpRequest.setRequestCode(302);
@@ -38,11 +38,11 @@ public class CourseManagerService {
         return httpRequest;
     }
 
-    public HttpRequest editCourseService(String coursename,String cost,String state){
+    public HttpRequest editCourseService(String courseName,float cost,int state){
         try{
-            courseManageDao.editCourse(coursename,cost,state);
+            courseManageDao.editCourse(courseName,cost,state);
             httpRequest.setRequestCode(200);
-            httpRequest.setRequestMessage("课程修改成功："+coursename);
+            httpRequest.setRequestMessage("课程修改成功："+courseName);
         }catch (Exception e){
             e.printStackTrace();
             httpRequest.setRequestData(303);

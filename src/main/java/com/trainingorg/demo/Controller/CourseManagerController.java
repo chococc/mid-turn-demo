@@ -14,21 +14,21 @@ public class CourseManagerController {
     protected CourseManagerService courseManagerService =new CourseManagerService();
     protected HttpRequest httpRequest=new HttpRequest();
 
-    @RequestMapping(value = "/addcourse")
+    @RequestMapping(value = "/add")
     public HttpRequest addCourse(@RequestParam(value = "coursename",required = false) String coursename){
         httpRequest= courseManagerService.addCourseService(coursename);
         return httpRequest;
     }
 
-    @RequestMapping(value = "/deletecourse")
+    @RequestMapping(value = "/delete")
     public HttpRequest deleteCourse(@RequestParam(value="coursename",required = false) String coursename){
         httpRequest= courseManagerService.deleteCourseService(coursename);
         return httpRequest;
     }
 
-    @RequestMapping(value = "/editCourse")
-    public HttpRequest editCourse(@RequestParam(value = "coursename",required = false) String coursename,@RequestParam(value = "cost",required = false) String Cost,@RequestParam(value = "status",required = false) String status){
-        httpRequest= courseManagerService.editCourseService(coursename,Cost,status);
+    @RequestMapping(value = "/edit")
+    public HttpRequest editCourse(@RequestParam(value = "coursename",required = false) String courseName,@RequestParam(value = "cost") float Cost,@RequestParam(value = "status") int status){
+        httpRequest= courseManagerService.editCourseService(courseName,Cost,status);
         return httpRequest;
     }
 
