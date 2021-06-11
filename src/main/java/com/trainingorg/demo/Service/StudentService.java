@@ -114,7 +114,7 @@ public class StudentService {
     public HttpRequest selectAll(){
         try {
             httpRequest.setRequestCode(200);
-            httpRequest.setRequestData(studentDao.selectAll());
+            httpRequest.setRequestData(JSON.toJSON(studentDao.selectAll()));
             httpRequest.setRequestMessage("查询成功");
         }catch (Exception e){
             e.printStackTrace();
