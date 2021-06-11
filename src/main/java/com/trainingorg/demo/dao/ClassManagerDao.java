@@ -48,7 +48,7 @@ public class ClassManagerDao {
         return mysqlActuator.getForList(ClassEntity.class,"SELECT * from classList");
     }
 
-    public List<ClassEntity> selectByID(String classID) throws SQLException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        return mysqlActuator.getForList(ClassEntity.class,"SELECT * from classList where classID="+classID);
+    public ClassEntity selectByID(String classID) throws SQLException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        return mysqlActuator.get(ClassEntity.class,"SELECT * from classList where classID="+classID);
     }
 }
