@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginUserManagerDao {
+public class LoginUserDao {
 
     protected MysqlActuator mysqlActuator = new MysqlActuator();
 

@@ -5,7 +5,7 @@ import com.trainingorg.demo.bean.Entity.UserEntity;
 import com.trainingorg.demo.bean.HttpRequest;
 import com.trainingorg.demo.Util.MysqlActuator;
 import com.trainingorg.demo.Util.Token;
-import com.trainingorg.demo.dao.LoginUserManagerDao;
+import com.trainingorg.demo.dao.LoginUserDao;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -14,16 +14,16 @@ import java.sql.Timestamp;
 
 public class UserService {
 
-    protected LoginUserManagerDao loginUserManagerDao=new LoginUserManagerDao();
+    protected LoginUserDao loginUserDao =new LoginUserDao();
     protected MysqlActuator mysqlActuator = new MysqlActuator();
     protected HttpRequest httpRequest=new HttpRequest();
 
     public HttpRequest addUserService(String username, String password) {
         Timestamp timestamp= new TimeStamp().getNowTimestamp();
         try {
-            if (!loginUserManagerDao.existID(username)) {
+            if (!loginUserDao.existID(username)) {
                 try {
-                    loginUserManagerDao.adduser(username,password,timestamp);
+                    loginUserDao.adduser(username,password,timestamp);
                     httpRequest.setRequestCode(200);
                     httpRequest.setRequestMessage("用户注册成功");
                 } catch (Exception e) {
@@ -44,7 +44,7 @@ public class UserService {
 
     public HttpRequest deleteUserService(String username) {
         try {
-            if (loginUserManagerDao.existID(username)) {
+            if (loginUserDao.existID(username)) {
                 try {
                     mysqlActuator.update("DELETE FROM Users where Username='" + username + "'");
                     httpRequest.setRequestCode(200);

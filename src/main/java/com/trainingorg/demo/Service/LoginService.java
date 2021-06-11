@@ -3,7 +3,7 @@ package com.trainingorg.demo.Service;
 import com.trainingorg.demo.Util.RequestMessage;
 import com.trainingorg.demo.Util.Token;
 import com.trainingorg.demo.bean.*;
-import com.trainingorg.demo.dao.LoginUserManagerDao;
+import com.trainingorg.demo.dao.LoginUserDao;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -71,7 +71,7 @@ public class LoginService {
 
     public HttpRequest user_reset_password(String username,String password){
         try{
-            new LoginUserManagerDao().resetPassword(username,password);
+            new LoginUserDao().resetPassword(username,password);
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("已成功重置密码");
         }catch (Exception e){

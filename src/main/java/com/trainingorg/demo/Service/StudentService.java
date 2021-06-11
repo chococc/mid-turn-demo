@@ -1,14 +1,14 @@
 package com.trainingorg.demo.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.trainingorg.demo.Util.MysqlActuator;
 import com.trainingorg.demo.Util.TimeStamp;
-import com.trainingorg.demo.Util.Token;
 import com.trainingorg.demo.bean.Entity.ClassEntity;
 import com.trainingorg.demo.bean.Entity.CourseEntity;
 import com.trainingorg.demo.bean.Entity.StudentClassEntity;
-import com.trainingorg.demo.bean.Entity.UserEntity;
 import com.trainingorg.demo.bean.HttpRequest;
+import com.trainingorg.demo.dao.ClassManagerDao;
+import com.trainingorg.demo.dao.CourseManageDao;
+import com.trainingorg.demo.dao.StudentDao;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,14 +19,11 @@ import java.util.List;
 public class StudentService {
 
     HttpRequest httpRequest=new HttpRequest();
-    MysqlActuator mysqlActuator=new MysqlActuator();
+    StudentDao studentDao=new StudentDao();
 
     public HttpRequest choseClass(String classID){
-        Token token=new Token();
-        String username=token.Token2Username();
         try {
-            UserEntity userEntity = mysqlActuator.get(UserEntity.class, "SELECT * from Users where username = '"+username+"'");
-            mysqlActuator.update("INSERT into studentClass(studentId,studentName,classId) values('"+username+"','"+userEntity.getName()+"','"+classID+"')");
+            studentDao.choseClass(classID);
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("选课成功");
         }catch (Exception e){
@@ -38,18 +35,17 @@ public class StudentService {
     }
 
     public HttpRequest getTimeTable(String instance){
-        Token token=new Token();
-        String username=token.Token2Username();
+
         if(instance==null) {
             instance = new TimeStamp().getInstance();
         }
         List<StudentClassEntity> classList;
         List<ClassEntity> todayClass=new ArrayList<>();
         try {
-            classList = mysqlActuator.getForList(StudentClassEntity.class, "SELECT * from studentClass where studentId='" + username + "'");
+            classList = studentDao.selectClassListByStudent();
             if(classList!=null){
                 for (StudentClassEntity studentClassEntity : classList) {
-                    todayClass.add(mysqlActuator.get(ClassEntity.class,"SELECT * from classList where classId='"+studentClassEntity.getClassId()+"'AND (ClassTime1 like '+"+instance+"%'or ClassTime2 like '"+instance+"%' or ClassTime3 like '"+instance+"%')"));
+                    todayClass.add(studentDao.selectClassByInstance(studentClassEntity,instance));
                 }
             }
             httpRequest.setRequestData(JSON.toJSON(todayClass));
@@ -65,17 +61,16 @@ public class StudentService {
     }
 
     public HttpRequest getCost(){
-        Token token=new Token();
-        String username=token.Token2Username();
+
         List<StudentClassEntity> notPayList;
         ClassEntity classEntity;
         CourseEntity course;
         int total=0;
         try{
-            notPayList=mysqlActuator.getForList(StudentClassEntity.class,"SELECT * from studentClass where studentId='"+username+"' and pay=0");
+            notPayList= studentDao.notPayList();
             for(StudentClassEntity studentClassEntity:notPayList){
-                classEntity=mysqlActuator.get(ClassEntity.class,"SELECT * from classList where classID='"+studentClassEntity.getClassId()+"'");
-                course=mysqlActuator.get(CourseEntity.class,"SELECT * from CourseList where courseID='"+classEntity.getCourseId()+"'");
+                classEntity= new ClassManagerDao().selectByID(studentClassEntity.getClassId());
+                course=new CourseManageDao().selectByID(classEntity.getCourseId());
                 total+=course.getCourseCost();
             }
             httpRequest.setRequestMessage("共计需支付 "+total+" 元");
@@ -90,10 +85,8 @@ public class StudentService {
     }
 
     public HttpRequest deleteClass(String classID){
-        Token token=new Token();
-        String username=token.Token2Username();
         try{
-            mysqlActuator.update("DELETE from studentClass where studentID='"+username+"' and classID='"+classID+"'");
+            studentDao.deleteClass(classID);
             httpRequest.setRequestMessage("删除成功");
             httpRequest.setRequestCode(200);
         }catch (Exception e){
@@ -105,10 +98,9 @@ public class StudentService {
     }
 
     public HttpRequest getPay(){
-        Token token=new Token();
-        String username= token.Token2Username();
+
         try {
-            mysqlActuator.update("UPDATE studentClass SET pay=1 where studentID='"+username+"'");
+            studentDao.payClass();
             httpRequest.setRequestMessage("支付成功");
             httpRequest.setRequestCode(200);
         }catch (Exception e){
@@ -120,11 +112,9 @@ public class StudentService {
     }
 
     public HttpRequest selectAll(){
-        Token token=new Token();
-        String username=token.Token2Username();
         try {
             httpRequest.setRequestCode(200);
-            httpRequest.setRequestData(mysqlActuator.getForList(StudentClassEntity.class,"SELECT * from studentClass where studentId='" + username + "'"));
+            httpRequest.setRequestData(studentDao.selectAll());
             httpRequest.setRequestMessage("查询成功");
         }catch (Exception e){
             e.printStackTrace();
