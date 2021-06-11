@@ -36,13 +36,28 @@ public class OrgDao {
         mysqlActuator.update(SQLUtils.getSql("OrgList","insert",map,false,""));
     }
 
-    public void checkOrg(String OrgID,String status) throws SQLException {
-        mysqlActuator.update("UPDATE OrgList set check='1','status="+status+" where OrgID="+OrgID);
-
+    public void checkOrg(String OrgName) throws Exception {
+        //mysqlActuator.update("UPDATE OrgList set check='1','status="+status+" where OrgID="+OrgID);
+        Map<String,Object> map=new HashMap<>();
+        map.put("check",1);
+        map.put("Key_OrgID",OrgName);
+        mysqlActuator.update(SQLUtils.getSql("OrgList","update",map,false,""));
+        map=new HashMap<>();
+        map.put("userState",1);
+        map.put("Key_Username",OrgName);
+        mysqlActuator.update(SQLUtils.getSql("Users","update",map,false,""));
     }
 
-    public void updateMessage(String manager,String telephone,String managerName,String managerIdentityCard) throws SQLException {
-        mysqlActuator.update("UPDATE OrgList set manager='"+manager+"',telephone='"+telephone+"',managerName='"+managerName+"',managerIdentityCard='"+managerIdentityCard+"',check='0'");
+    public void updateMessage(String manager,String telephone,String managerName,String managerIdentityCard) throws Exception {
+        //mysqlActuator.update("UPDATE OrgList set manager='"+manager+"',telephone='"+telephone+"',managerName='"+managerName+"',managerIdentityCard='"+managerIdentityCard+"',check='0'");
+        Map<String,Object> map=new HashMap<>();
+        map.put("manager",manager);
+        map.put("telephone",telephone);
+        map.put("managerName",managerName);
+        map.put("managerIdentityCard",managerIdentityCard);
+        map.put("check",0);
+        map.put("Key_OrgID",Token2OrgID());
+        mysqlActuator.update(SQLUtils.getSql("OrgList","update",map,false,""));
     }
 
     public List<OrgEntity> selectAll() throws SQLException, InvocationTargetException, InstantiationException, IllegalAccessException {

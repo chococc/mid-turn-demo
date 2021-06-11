@@ -24,9 +24,9 @@ public class OrgService {
         return httpRequest;
     }
 
-    public HttpRequest checkOrg(String OrgID,String status){
+    public HttpRequest checkOrg(String OrgID){
         try {
-            orgDao.checkOrg(OrgID,status);
+            orgDao.checkOrg(OrgID);
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("机构审核状态已更新");
         }catch (Exception e){

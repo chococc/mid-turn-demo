@@ -18,8 +18,8 @@ public class OrgController {
     }
 
     @RequestMapping(value = "/check")
-    public HttpRequest check(@RequestParam("OrgID") String OrgID,@RequestParam("status") String status){
-        return orgService.checkOrg(OrgID,status);
+    public HttpRequest check(@RequestParam("OrgID") String OrgID){
+        return orgService.checkOrg(OrgID);
     }
 
     @RequestMapping(value="/update")
