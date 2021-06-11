@@ -12,7 +12,7 @@ public class LoginUserManagerDao {
     protected MysqlActuator mysqlActuator = new MysqlActuator();
 
     public void adduser(String username, String password, Timestamp timestamp) throws SQLException {
-        mysqlActuator.update("INSERT INTO Users(username,password,createDate) VALUES('" + username + "','" + password + "','"+timestamp+"',null)");
+        mysqlActuator.update("INSERT INTO Users(username,password,createDate) VALUES('" + username + "','" + password + "','"+timestamp+"')");
     }
 
     public UserEntity selectByID(String id) throws SQLException, InvocationTargetException, IllegalAccessException, InstantiationException {

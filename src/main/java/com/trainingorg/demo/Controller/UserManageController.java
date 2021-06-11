@@ -13,7 +13,7 @@ public class UserManageController {
 
     protected UserService userService=new UserService();
 
-    @RequestMapping("/adduser")
+    @RequestMapping("/add")
     public HttpRequest adduser(@RequestParam(value="username",required = false) String username,@RequestParam(value="password",required = false) String password){
         return userService.addUserService(username,password);
     }

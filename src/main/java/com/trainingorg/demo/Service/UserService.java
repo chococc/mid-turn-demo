@@ -27,6 +27,7 @@ public class UserService {
                     httpRequest.setRequestCode(200);
                     httpRequest.setRequestMessage("用户注册成功");
                 } catch (Exception e) {
+                    e.printStackTrace();
                     httpRequest.setRequestCode(201);
                     httpRequest.setRequestMessage("用户注册失败");
                 }
@@ -73,7 +74,7 @@ public class UserService {
         } catch (Exception e) {
             httpRequest.setRequestCode(203);
             httpRequest.setRequestMessage("用户删除失败");
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         httpRequest.setRequestData(null);
         return httpRequest;
