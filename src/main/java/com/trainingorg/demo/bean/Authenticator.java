@@ -22,7 +22,7 @@ public class Authenticator {
      * return Token.RequestMessage
      * System Exception Code 01
      */
-    public RequestMessage Confirmer(String username, String password){
+    public RequestMessage Conformer(String username, String password){
         try {
             ResultSet rs = new MysqlActuator().getResultSet_Select("select * from Users where username = " + username);
             if(!rs.next()){
@@ -40,7 +40,7 @@ public class Authenticator {
 
     //Login Data Confirmed Test Interface.
     public RequestMessage Access_Test(String username,String password){
-        return Confirmer(username,password);
+        return Conformer(username,password);
     }
 
     public Authenticator(){}

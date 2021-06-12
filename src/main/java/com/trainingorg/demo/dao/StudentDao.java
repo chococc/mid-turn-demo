@@ -2,6 +2,7 @@ package com.trainingorg.demo.dao;
 
 import com.trainingorg.demo.Util.MysqlActuator;
 import com.trainingorg.demo.Util.SQLUtils;
+import com.trainingorg.demo.Util.TimeStamp;
 import com.trainingorg.demo.Util.Token;
 import com.trainingorg.demo.bean.Entity.ClassEntity;
 import com.trainingorg.demo.bean.Entity.StudentClassEntity;
@@ -34,13 +35,18 @@ public class StudentDao {
     }
 
     public ClassEntity selectClassByInstance(StudentClassEntity studentClassEntity,String instance) throws Exception{
+        if(instance==null) {
+            instance = new TimeStamp().getInstance();
+        }
         return mysqlActuator.get(ClassEntity.class,"SELECT * from classList where classId='"+studentClassEntity.getClassId()+"'AND (ClassTime1 like '+"+instance+"%'or ClassTime2 like '"+instance+"%' or ClassTime3 like '"+instance+"%')");
     }
+
     public void deleteClass(String classID) throws Exception{
         Token token=new Token();
         String username=token.Token2Username();
         mysqlActuator.update("DELETE from studentClass where studentID='"+username+"' and classID='"+classID+"'");
     }
+
     public List<StudentClassEntity> notPayList() throws Exception{
         Token token=new Token();
         String username=token.Token2Username();
@@ -57,6 +63,13 @@ public class StudentDao {
         mysqlActuator.update(SQLUtils.getSql("studentClass","update",map,false,""));
     }
 
+    public void setGrade(int classID,String studentID,int teacherGrade) throws Exception{
+        Map<String,Object> map=new HashMap<>();
+        map.put("teacherGrade",teacherGrade);
+        map.put("Key_studentID",studentID);
+        map.put("Key_classID",classID);
+        mysqlActuator.update(SQLUtils.getSql("StudentClass","update",map,false,null));
+    }
     public List<StudentClassEntity> selectAll() throws Exception{
         Token token=new Token();
         String username=token.Token2Username();

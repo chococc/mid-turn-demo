@@ -15,7 +15,7 @@ public class LoginService {
 
         String Token;
 
-        if(new Authenticator().Confirmer(username,password).getMessage().equals(new RequestMessage().LoginMessage_Success().getMessage())){
+        if(new Authenticator().Conformer(username,password).getMessage().equals(new RequestMessage().LoginMessage_Success().getMessage())){
 
             Token=new Token().getToken_login(username,password);
 

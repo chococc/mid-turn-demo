@@ -1,7 +1,6 @@
 package com.trainingorg.demo.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.trainingorg.demo.Util.TimeStamp;
 import com.trainingorg.demo.bean.Entity.ClassEntity;
 import com.trainingorg.demo.bean.Entity.CourseEntity;
 import com.trainingorg.demo.bean.Entity.StudentClassEntity;
@@ -36,9 +35,7 @@ public class StudentService {
 
     public HttpRequest getTimeTable(String instance){
 
-        if(instance==null) {
-            instance = new TimeStamp().getInstance();
-        }
+
         List<StudentClassEntity> classList;
         List<ClassEntity> todayClass=new ArrayList<>();
         try {

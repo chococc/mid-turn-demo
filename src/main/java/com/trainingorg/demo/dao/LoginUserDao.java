@@ -2,12 +2,14 @@ package com.trainingorg.demo.dao;
 
 import com.trainingorg.demo.Util.MysqlActuator;
 import com.trainingorg.demo.Util.SQLUtils;
+import com.trainingorg.demo.Util.Token;
 import com.trainingorg.demo.bean.Entity.UserEntity;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LoginUserDao {
@@ -20,7 +22,7 @@ public class LoginUserDao {
         map.put("password",password);
         map.put("createDate",timestamp.toString());
         //mysqlActuator.update("INSERT INTO Users(username,password,createDate) VALUES('" + username + "','" + password + "','"+timestamp+"')");
-        mysqlActuator.update(SQLUtils.getSql("Users","insert",map,false,""));
+        mysqlActuator.update(SQLUtils.getSql("Users","insert",map,false,null));
     }
 
     public UserEntity selectByID(String id) throws SQLException, InvocationTargetException, IllegalAccessException, InstantiationException {
@@ -32,9 +34,41 @@ public class LoginUserDao {
     }
 
     public void resetPassword(String username,String password) throws Exception {
-        Map<String, String> map=new HashMap<>();
+        Map<String, Object> map=new HashMap<>();
         map.put("password",password);
         map.put("Key_Username",username);
-        mysqlActuator.update(SQLUtils.getSql("users","update",map,false,""));
+        mysqlActuator.update(SQLUtils.getSql("users","update",map,false,null));
+    }
+
+    public void editUsers(String username,String name,String identity,String phone,String Org) throws Exception{
+        //mysqlActuator.update("UPDATE Users SET NAME='" + name + "',identify='" + identity + "',telephone='" + phone + "',ORG='" + Org + "' where username='" + username + "'");
+        Map<String,Object> map=new HashMap<>();
+        map.put("name",name);
+        map.put("identify",identity);
+        map.put("telephone",phone);
+        map.put("Org",Org);
+        map.put("Key_username",username);
+        mysqlActuator.update(SQLUtils.getSql("Users","update",map,false,null));
+    }
+
+    public void editUsers_Token(String name,String identity,String phone,String Org) throws Exception{
+        Token token=new Token();
+        String username=token.Token2Username();
+        //mysqlActuator.update("UPDATE Users SET NAME='" + name + "',identify='" + identity + "',telephone='" + phone + "',ORG='" + Org + "' where username='" + editUser_username + "'");
+        Map<String,Object> map=new HashMap<>();
+        map.put("name",name);
+        map.put("identify",identity);
+        map.put("telephone",phone);
+        map.put("Org",Org);
+        map.put("Key_username",username);
+        mysqlActuator.update(SQLUtils.getSql("Users","update",map,false,null));
+    }
+
+    public List<UserEntity> selectAll() throws Exception{
+        return mysqlActuator.getForList(UserEntity.class, "SELECT * from Users");
+    }
+
+    public UserEntity selectAllByID(String username) throws Exception{
+        return mysqlActuator.get(UserEntity.class, "SELECT * from Users where username='"+username+"'");
     }
 }

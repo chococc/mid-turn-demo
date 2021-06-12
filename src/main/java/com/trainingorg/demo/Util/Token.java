@@ -22,7 +22,7 @@ public class Token {
 
     public RequestMessage TokenGenerator(String username,String password) {
         RequestMessage RM;
-        if(new Authenticator().Confirmer(username, password).getMessage().equals(new RequestMessage().LoginMessage_Success().getMessage())) {
+        if(new Authenticator().Conformer(username, password).getMessage().equals(new RequestMessage().LoginMessage_Success().getMessage())) {
             RM=new RequestMessage().Token_Success();
             token = UUID.randomUUID().toString().replaceAll("-", "");
             //System.out.println(token);
@@ -33,7 +33,7 @@ public class Token {
             }
         }
         else {
-            RM = new Authenticator().Confirmer(username, password);
+            RM = new Authenticator().Conformer(username, password);
         }
         return RM;
     }

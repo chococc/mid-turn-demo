@@ -1,7 +1,6 @@
 package com.trainingorg.demo.Service;
 
 import com.trainingorg.demo.Util.TimeStamp;
-import com.trainingorg.demo.bean.Entity.UserEntity;
 import com.trainingorg.demo.bean.HttpRequest;
 import com.trainingorg.demo.Util.MysqlActuator;
 import com.trainingorg.demo.Util.Token;
@@ -82,7 +81,7 @@ public class UserService {
 
     public HttpRequest editUsers_service(String username, String name, String identity, String phone, String Org) {
         try {
-            mysqlActuator.update("UPDATE Users SET NAME='" + name + "',identify='" + identity + "',telephone='" + phone + "',ORG='" + Org + "' where username='" + username + "'");
+            loginUserDao.editUsers(username,name,identity,phone,Org);
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("用户信息修改成功");
         } catch (Exception e) {
@@ -94,17 +93,8 @@ public class UserService {
     }
 
     public HttpRequest editUsersCustomerService(String name, String identity, String phone, String Org) {
-
-        Token token = new Token();
-        String edituser = token.getToken_Cookie();
-
-        if (edituser == null) {
-            httpRequest.setRequestCode(102);
-            httpRequest.setRequestMessage("当前为未登入状态");
-        } else {
             try {
-                String edituser_username = token.Token2Username();
-                mysqlActuator.update("UPDATE Users SET NAME='" + name + "',identify='" + identity + "',telephone='" + phone + "',ORG='" + Org + "' where username='" + edituser_username + "'");
+                loginUserDao.editUsers_Token(name,identity,phone,Org);
                 httpRequest.setRequestCode(200);
                 httpRequest.setRequestMessage("用户信息修改成功");
             } catch (Exception e) {
@@ -112,13 +102,12 @@ public class UserService {
                 httpRequest.setRequestMessage("用户信息修改失败");
                 System.out.println(e.getMessage());
             }
-        }
         return httpRequest;
     }
 
     public HttpRequest selectUserSelectAll() {
         try {
-            httpRequest.setRequestData(new MysqlActuator().getForList(UserEntity.class, "SELECT * from Users"));
+            httpRequest.setRequestData(loginUserDao.selectAll());
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("用户信息拉取成功");
         }catch (Exception e){
@@ -131,7 +120,7 @@ public class UserService {
 
     public HttpRequest selectUserSelectByIDService(String username){
         try {
-            httpRequest.setRequestData(new MysqlActuator().getForList(UserEntity.class, "SELECT * from Users where username='"+username+"'"));
+            httpRequest.setRequestData(loginUserDao.selectAllByID(username));
             httpRequest.setRequestCode(200);
             httpRequest.setRequestMessage("用户信息拉取成功");
         }catch (Exception e){

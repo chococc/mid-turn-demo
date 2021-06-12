@@ -28,7 +28,7 @@ public class TeacherController {
     }
 
     @RequestMapping(value = "/setGrade")
-    public HttpRequest setGrade(@RequestParam(value = "classID",required = false) String classID,@RequestParam(value = "studentID",required = false) String studentID,@RequestParam(value = "grade",required = false) int grade){
+    public HttpRequest setGrade(@RequestParam(value = "classID",required = false) int classID,@RequestParam(value = "studentID",required = false) String studentID,@RequestParam(value = "grade",required = false) int grade){
         return teacherService.setGrade(classID,studentID,grade);
     }
 
