@@ -3,8 +3,6 @@ package com.trainingorg.demo.dao;
 import com.trainingorg.demo.Util.MysqlActuator;
 import com.trainingorg.demo.bean.Entity.KnowledgeBase;
 
-import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
 import java.util.List;
 
 public class KnowledgeDao {

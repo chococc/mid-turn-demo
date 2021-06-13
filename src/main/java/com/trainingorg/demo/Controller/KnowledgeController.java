@@ -18,4 +18,8 @@ public class KnowledgeController {
     public HttpRequest run(@RequestParam("id") String id){
         return knowledgeService.run(id);
     }
+
+    @RequestMapping("/selectAll")
+    public HttpRequest selectAll(){return knowledgeService.selectAll();}
+
 }
