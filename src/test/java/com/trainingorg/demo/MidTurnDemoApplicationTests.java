@@ -1,6 +1,7 @@
 package com.trainingorg.demo;
 
 import com.trainingorg.demo.Service.ClassManagerService;
+import com.trainingorg.demo.Service.KnowledgeService;
 import com.trainingorg.demo.bean.Authenticator;
 import com.trainingorg.demo.Util.MysqlConnector;
 import com.trainingorg.demo.Util.Token;
@@ -41,4 +42,7 @@ class MidTurnDemoApplicationTests {
 
     @Test
     void selectAllClassTest(){System.out.println(new ClassManagerService().selectAll().getRequestData());}
+
+    @Test
+    void KnowledgeServiceTest1(){new KnowledgeService().run("test1");}
 }

@@ -8,7 +8,7 @@ public class CourseEntity {
 
     protected String courseName;
     protected int courseID;
-    protected float courseCost;
+    protected float cost;
     protected int courseState;
 
 }

@@ -68,7 +68,7 @@ public class StudentService {
             for(StudentClassEntity studentClassEntity:notPayList){
                 classEntity= new ClassManagerDao().selectByID(studentClassEntity.getClassId());
                 course=new CourseManageDao().selectByID(classEntity.getCourseId());
-                total+=course.getCourseCost();
+                total+=course.getCost();
             }
             httpRequest.setRequestMessage("共计需支付 "+total+" 元");
             httpRequest.setRequestCode(200);

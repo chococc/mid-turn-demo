@@ -12,6 +12,6 @@ public class KnowledgeBase {
     protected int mathF;
     protected String dataBase;
     protected String dataType;
-    protected String list;
+    protected String sql;
 
 }
