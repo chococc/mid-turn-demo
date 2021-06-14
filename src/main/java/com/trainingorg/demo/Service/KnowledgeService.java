@@ -26,10 +26,10 @@ public class KnowledgeService {
             for (int i=0;i<knowledgeList.size();i++) {
                 KnowledgeBase knowledgeBase=knowledgeList.get(i);
                 if(i==knowledgeList.size()-1&&knowledgeBase.getSql()==null){
-                    httpRequest.setRequestData(sqlMath.calculator(knowledgeBase.getMathF(),number0));
+                    httpRequest.setData(sqlMath.calculator(knowledgeBase.getMathF(),number0));
                     break;
                 }else if(i==knowledgeList.size()-1&&knowledgeBase.getSql()!=null){
-                    httpRequest.setRequestData(number0);
+                    httpRequest.setData(number0);
                     break;
                 }
                 try {
@@ -44,30 +44,30 @@ public class KnowledgeService {
                             List<Integer> number = mysqlActuator.getForValue(knowledgeBase.getSql());
                             number0.add(sqlMath.calculateInteger(knowledgeBase.getMathF(), number));
                         }catch (Exception b){
-                            httpRequest.setRequestCode(702);
+                            httpRequest.setCode(702);
                             httpRequest.setRequestMessage("查询结果的数据类型不受支持。");
                         }
                     } finally {
-                        httpRequest.setRequestCode(200);
+                        httpRequest.setCode(200);
                         httpRequest.setRequestMessage("查询成功");
                     }
                 }
             }
         } catch (Exception e) {
-            httpRequest.setRequestCode(701);
+            httpRequest.setCode(701);
             httpRequest.setRequestMessage("查询失败,请检查sql语句正确性");
         }
-        System.out.println(httpRequest.getRequestData());
+        System.out.println(httpRequest.getData());
         return httpRequest;
     }
 
     public HttpRequest selectAll(){
         try{
-            httpRequest.setRequestCode(200);
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("查询成功");
-            httpRequest.setRequestData(knowledgeDao.selectAll());
+            httpRequest.setData(knowledgeDao.selectAll());
         }catch (Exception e){
-            httpRequest.setRequestCode(702);
+            httpRequest.setCode(702);
             httpRequest.setRequestMessage(e.getMessage());
             e.printStackTrace();
         }

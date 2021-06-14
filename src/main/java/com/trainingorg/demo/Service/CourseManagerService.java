@@ -14,11 +14,11 @@ public class CourseManagerService {
     public HttpRequest addCourseService(String courseName){
         try {
             courseManageDao.addCourse(courseName);
-            httpRequest.setRequestCode(200);
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("课程添加成功"+courseName);
         }catch (Exception e){
             e.printStackTrace();
-            httpRequest.setRequestCode(301);
+            httpRequest.setCode(301);
             httpRequest.setRequestMessage("课程已存在"+e.getMessage());
         }
 
@@ -28,11 +28,11 @@ public class CourseManagerService {
     public HttpRequest deleteCourseService(String courseName){
         try {
             courseManageDao.deleteCourse(courseName);
-            httpRequest.setRequestCode(200);
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("课程删除成功："+courseName);
         }catch (Exception e){
             e.printStackTrace();
-            httpRequest.setRequestCode(302);
+            httpRequest.setCode(302);
             httpRequest.setRequestMessage("课程管理服务存在问题@deletecourse:"+e.getMessage());
         }
         return httpRequest;
@@ -41,11 +41,11 @@ public class CourseManagerService {
     public HttpRequest editCourseService(String courseName,float cost,int state){
         try{
             courseManageDao.editCourse(courseName,cost,state);
-            httpRequest.setRequestCode(200);
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("课程修改成功："+courseName);
         }catch (Exception e){
             e.printStackTrace();
-            httpRequest.setRequestData(303);
+            httpRequest.setCode(303);
             httpRequest.setRequestMessage("课程管理服务存在问题@editCourseService:"+e.getMessage());
         }
         return httpRequest;
@@ -53,11 +53,11 @@ public class CourseManagerService {
 
     public HttpRequest selectAllService(){
         try {
-            httpRequest.setRequestData(courseManageDao.selectAll());
-            httpRequest.setRequestCode(200);
+            httpRequest.setData(courseManageDao.selectAll());
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("用户信息拉取成功");
         }catch (Exception e){
-            httpRequest.setRequestCode(104);
+            httpRequest.setCode(104);
             httpRequest.setRequestMessage("拉取用户信息失败");
             e.printStackTrace();
         }
@@ -66,12 +66,12 @@ public class CourseManagerService {
 
     public HttpRequest selectByID(String courseName){
         try{
-            httpRequest.setRequestCode(200);
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("数据拉取成功");
-            httpRequest.setRequestData(courseManageDao.selectByID(courseName));
+            httpRequest.setData(courseManageDao.selectByID(courseName));
         }catch (Exception e){
             e.printStackTrace();
-            httpRequest.setRequestCode(306);
+            httpRequest.setCode(306);
             httpRequest.setRequestMessage("课程表拉取失败@selectCourseByID:"+e.getMessage());
         }
         return httpRequest;

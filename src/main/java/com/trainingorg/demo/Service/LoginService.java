@@ -1,6 +1,5 @@
 package com.trainingorg.demo.Service;
 
-import com.trainingorg.demo.Util.RequestMessage;
 import com.trainingorg.demo.Util.Token;
 import com.trainingorg.demo.bean.*;
 import com.trainingorg.demo.dao.LoginUserDao;
@@ -10,24 +9,24 @@ import org.springframework.stereotype.Service;
 public class LoginService {
 
     protected HttpRequest httpRequest=new HttpRequest();
+    protected LoginUserDao loginUserDao=new LoginUserDao();
 
     public HttpRequest user_login_service(String username, String password){
-
         String Token;
-
-        if(new Authenticator().Conformer(username,password).getMessage().equals(new RequestMessage().LoginMessage_Success().getMessage())){
-
-            Token=new Token().getToken_login(username,password);
-
-            httpRequest.setRequestCode(200);
+    try {
+        if (loginUserDao.selectByID(username).getPassword().equals(password)) {
+            Token = new Token().getToken_login(username, password);
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("登入成功");
-            httpRequest.setRequestData(Token);
-        }
-        else{
-            httpRequest.setRequestCode(101);
+            httpRequest.setData(Token);
+        } else {
+            httpRequest.setCode(202);
             httpRequest.setRequestMessage("登入失败");
-            httpRequest.setRequestData(new Token().getToken_login(username,password));
         }
+    }catch(Exception e){
+        httpRequest.setCode(201);
+        httpRequest.setRequestMessage("用户不存在");
+    }
         return httpRequest;
     }
 
@@ -36,13 +35,13 @@ public class LoginService {
         String Token=new Token().getToken_Cookie();
 
         if (Token!=null) {
-            httpRequest.setRequestCode(200);
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("当前请求已认证");
-            httpRequest.setRequestData(Token);
+            httpRequest.setData(Token);
         }else{
-            httpRequest.setRequestCode(102);
+            httpRequest.setCode(102);
             httpRequest.setRequestMessage("当前为未登入状态");
-            httpRequest.setRequestData(null);
+            httpRequest.setData(null);
         }
         return httpRequest;
     }
@@ -59,12 +58,12 @@ public class LoginService {
 
         if(token!=null){
             new Token().TokenDeleter(token);
-            httpRequest.setRequestCode(200);
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("用户成功登出");
         }else{
-            httpRequest.setRequestCode(102);
+            httpRequest.setCode(102);
         }
-        httpRequest.setRequestData(null);
+        httpRequest.setData(null);
 
         return httpRequest;
     }
@@ -72,10 +71,10 @@ public class LoginService {
     public HttpRequest user_reset_password(String username,String password){
         try{
             new LoginUserDao().resetPassword(username,password);
-            httpRequest.setRequestCode(200);
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("已成功重置密码");
         }catch (Exception e){
-            httpRequest.setRequestCode(103);
+            httpRequest.setCode(103);
             httpRequest.setRequestMessage("重置密码失败");
             System.out.println(e.getMessage());
         }

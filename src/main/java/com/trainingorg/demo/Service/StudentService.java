@@ -22,19 +22,23 @@ public class StudentService {
 
     public HttpRequest choseClass(String classID){
         try {
-            studentDao.choseClass(classID);
-            httpRequest.setRequestCode(200);
-            httpRequest.setRequestMessage("选课成功");
+            if(studentDao.selectByID(classID)!=null){
+                httpRequest.setCode(502);
+                httpRequest.setRequestMessage("已选择过该课程，请到课程表确认，若课程表中不包含此课程，请先支付该课程的学费。");
+            }else {
+                studentDao.choseClass(classID);
+                httpRequest.setCode(200);
+                httpRequest.setRequestMessage("选课成功");
+            }
         }catch (Exception e){
             e.printStackTrace();
-            httpRequest.setRequestMessage("学生不存在");
-            httpRequest.setRequestCode(501);
+            httpRequest.setRequestMessage("选课失败，请联系管理员");
+            httpRequest.setCode(501);
         }
         return httpRequest;
     }
 
     public HttpRequest getTimeTable(String instance){
-
 
         List<StudentClassEntity> classList;
         List<ClassEntity> todayClass=new ArrayList<>();
@@ -42,15 +46,17 @@ public class StudentService {
             classList = studentDao.selectClassListByStudent();
             if(classList!=null){
                 for (StudentClassEntity studentClassEntity : classList) {
-                    todayClass.add(studentDao.selectClassByInstance(studentClassEntity,instance));
+                    ClassEntity flag=studentDao.selectClassByInstance(studentClassEntity,instance);
+                    //if(flag.stillOn())
+                    todayClass.add(flag);
                 }
             }
-            httpRequest.setRequestData(JSON.toJSON(todayClass));
+            httpRequest.setData(JSON.toJSON(todayClass));
             httpRequest.setRequestMessage("查询成功");
-            httpRequest.setRequestCode(200);
+            httpRequest.setCode(200);
         }catch (Exception e){
             e.printStackTrace();
-            httpRequest.setRequestCode(502);
+            httpRequest.setCode(502);
             httpRequest.setRequestMessage("查询失败");
         }
         //System.out.println(todayClass);
@@ -71,11 +77,11 @@ public class StudentService {
                 total+=course.getCost();
             }
             httpRequest.setRequestMessage("共计需支付 "+total+" 元");
-            httpRequest.setRequestCode(200);
-            httpRequest.setRequestData(notPayList);
+            httpRequest.setCode(200);
+            httpRequest.setData(notPayList);
         }catch (Exception e){
             e.printStackTrace();
-            httpRequest.setRequestCode(504);
+            httpRequest.setCode(504);
             httpRequest.setRequestMessage("查询失败");
         }
         return httpRequest;
@@ -83,13 +89,18 @@ public class StudentService {
 
     public HttpRequest deleteClass(String classID){
         try{
-            studentDao.deleteClass(classID);
-            httpRequest.setRequestMessage("删除成功");
-            httpRequest.setRequestCode(200);
+            if(studentDao.getClassStatus(classID)==1){
+                httpRequest.setCode(506);
+                httpRequest.setRequestMessage("已支付该课程学费，本系统不支持本操作.");
+            }else {
+                studentDao.deleteClass(classID);
+                httpRequest.setRequestMessage("删除成功");
+                httpRequest.setCode(200);
+            }
         }catch (Exception e){
             e.printStackTrace();
-            httpRequest.setRequestCode(505);
-            httpRequest.setRequestMessage("删除失败");
+            httpRequest.setCode(505);
+            httpRequest.setRequestMessage(e.getMessage());
         }
         return httpRequest;
     }
@@ -99,23 +110,23 @@ public class StudentService {
         try {
             studentDao.payClass();
             httpRequest.setRequestMessage("支付成功");
-            httpRequest.setRequestCode(200);
+            httpRequest.setCode(200);
         }catch (Exception e){
             e.printStackTrace();
             httpRequest.setRequestMessage("支付失败");
-            httpRequest.setRequestCode(506);
+            httpRequest.setCode(507);
         }
         return httpRequest;
     }
 
     public HttpRequest selectAll(){
         try {
-            httpRequest.setRequestCode(200);
-            httpRequest.setRequestData(JSON.toJSON(studentDao.selectAll()));
+            httpRequest.setCode(200);
+            httpRequest.setData(JSON.toJSON(studentDao.selectAll()));
             httpRequest.setRequestMessage("查询成功");
         }catch (Exception e){
             e.printStackTrace();
-            httpRequest.setRequestCode(503);
+            httpRequest.setCode(503);
             httpRequest.setRequestMessage("查询失败");
         }
         return httpRequest;

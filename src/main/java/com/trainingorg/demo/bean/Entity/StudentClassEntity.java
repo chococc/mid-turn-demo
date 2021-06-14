@@ -11,5 +11,6 @@ public class StudentClassEntity {
     protected String classId;
     protected String evaluationState;
     protected String grade;
+    protected int status;
 
 }

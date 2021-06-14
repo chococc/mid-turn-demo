@@ -24,6 +24,7 @@ public class ClassManagerDao {
         map.put("endWeek",classEntity.getEndWeek());
         map.put("courseName",classEntity.getCourseName());
         map.put("teacherName",classEntity.getTeacherName());
+        System.out.println(SQLUtils.getSql("classList","insert",map,false,""));
         mysqlActuator.update(SQLUtils.getSql("classList","insert",map,false,""));
     }
 

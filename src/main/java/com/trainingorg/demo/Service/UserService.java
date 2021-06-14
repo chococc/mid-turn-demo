@@ -23,18 +23,18 @@ public class UserService {
             if (!loginUserDao.existID(username)) {
                 try {
                     loginUserDao.adduser(username,password,timestamp);
-                    httpRequest.setRequestCode(200);
+                    httpRequest.setCode(200);
                     httpRequest.setRequestMessage("用户注册成功");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    httpRequest.setRequestCode(201);
+                    httpRequest.setCode(201);
                     httpRequest.setRequestMessage("用户注册失败");
                 }
             } else {
-                httpRequest.setRequestCode(202);
+                httpRequest.setCode(202);
                 httpRequest.setRequestMessage("用户名已存在");
             }
-            httpRequest.setRequestData(null);
+            httpRequest.setData(null);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -46,18 +46,18 @@ public class UserService {
             if (loginUserDao.existID(username)) {
                 try {
                     mysqlActuator.update("DELETE FROM Users where Username='" + username + "'");
-                    httpRequest.setRequestCode(200);
+                    httpRequest.setCode(200);
                     httpRequest.setRequestMessage("用户删除成功");
                 } catch (Exception e) {
-                    httpRequest.setRequestCode(203);
+                    httpRequest.setCode(203);
                     httpRequest.setRequestMessage("用户删除失败");
                     System.out.println(e.getMessage());
                 }
             } else {
-                httpRequest.setRequestCode(204);
+                httpRequest.setCode(204);
                 httpRequest.setRequestMessage("用户删除不存在");
             }
-            httpRequest.setRequestData(null);
+            httpRequest.setData(null);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -68,24 +68,24 @@ public class UserService {
         String Token = new Token().getToken_Cookie();
         try {
             mysqlActuator.update("DELETE FROM Users where TokenId='" + Token + "'");
-            httpRequest.setRequestCode(200);
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("用户删除成功");
         } catch (Exception e) {
-            httpRequest.setRequestCode(203);
+            httpRequest.setCode(203);
             httpRequest.setRequestMessage("用户删除失败");
             e.printStackTrace();
         }
-        httpRequest.setRequestData(null);
+        httpRequest.setData(null);
         return httpRequest;
     }
 
     public HttpRequest editUsers_service(String username, String name, String identity, String phone, String Org) {
         try {
             loginUserDao.editUsers(username,name,identity,phone,Org);
-            httpRequest.setRequestCode(200);
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("用户信息修改成功");
         } catch (Exception e) {
-            httpRequest.setRequestCode(204);
+            httpRequest.setCode(204);
             httpRequest.setRequestMessage("用户信息修改失败");
             System.out.println(e.getMessage());
         }
@@ -95,10 +95,10 @@ public class UserService {
     public HttpRequest editUsersCustomerService(String name, String identity, String phone, String Org) {
             try {
                 loginUserDao.editUsers_Token(name,identity,phone,Org);
-                httpRequest.setRequestCode(200);
+                httpRequest.setCode(200);
                 httpRequest.setRequestMessage("用户信息修改成功");
             } catch (Exception e) {
-                httpRequest.setRequestCode(204);
+                httpRequest.setCode(204);
                 httpRequest.setRequestMessage("用户信息修改失败");
                 System.out.println(e.getMessage());
             }
@@ -107,11 +107,11 @@ public class UserService {
 
     public HttpRequest selectUserSelectAll() {
         try {
-            httpRequest.setRequestData(loginUserDao.selectAll());
-            httpRequest.setRequestCode(200);
+            httpRequest.setData(loginUserDao.selectAll());
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("用户信息拉取成功");
         }catch (Exception e){
-            httpRequest.setRequestCode(104);
+            httpRequest.setCode(104);
             httpRequest.setRequestMessage("拉取用户信息失败");
             e.printStackTrace();
         }
@@ -120,11 +120,11 @@ public class UserService {
 
     public HttpRequest selectUserSelectByIDService(String username){
         try {
-            httpRequest.setRequestData(loginUserDao.selectAllByID(username));
-            httpRequest.setRequestCode(200);
+            httpRequest.setData(loginUserDao.selectAllByID(username));
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("用户信息拉取成功");
         }catch (Exception e){
-            httpRequest.setRequestCode(104);
+            httpRequest.setCode(104);
             httpRequest.setRequestMessage("拉取用户信息失败");
             e.printStackTrace();
         }

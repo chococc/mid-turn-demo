@@ -21,7 +21,7 @@ public class TeacherDao {
         if(instance==null){
             instance=new TimeStamp().getInstance();
         }
-        return mysqlActuator.getForList(ClassEntity.class,"SELECT * FROM classList where teacherID='"+username+"' AND (ClassTime1 like '+"+instance+"%'or ClassTime2 like '"+instance+"%' or ClassTime3 like '"+instance+"%')");
+        return mysqlActuator.getForList(ClassEntity.class,"SELECT * FROM classList where teacherID='"+username+"' AND (ClassTime1 like '+"+instance+"%'or ClassTime2 like '"+instance+"%' or ClassTime3 like '"+instance+"%') and status=1");
     }
 
     public List<ClassEntity> getClassListByTeacherID() throws Exception{

@@ -1,6 +1,10 @@
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    username: "choco"
-    password: "aA232759"
-    url: "jdbc:postgresql:pgm-2zen2i7vk39wuhbsxo.pg.rds.aliyuncs.com:1921/TrainingOrg"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: "root"
+    password: "Kinoko@7"
+    url: "jdbc:mysql://39.103.196.184:3306/TrainingOrg"
+  mvc:
+    view:
+      prefix: /pages/
+      suffix: .html

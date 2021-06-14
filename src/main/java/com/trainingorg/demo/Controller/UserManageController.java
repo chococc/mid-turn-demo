@@ -2,11 +2,12 @@ package com.trainingorg.demo.Controller;
 
 import com.trainingorg.demo.Service.UserService;
 import com.trainingorg.demo.bean.HttpRequest;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/users")
 
 public class UserManageController {
@@ -14,8 +15,8 @@ public class UserManageController {
     protected UserService userService=new UserService();
 
     @RequestMapping("/add")
-    public HttpRequest adduser(@RequestParam(value="username",required = false) String username,@RequestParam(value="password",required = false) String password){
-        return userService.addUserService(username,password);
+    public HttpRequest adduser(@RequestBody Map<String,Object> map){
+        return userService.addUserService(map.get("username").toString(),map.get("password").toString());
     }
 
     @RequestMapping("/delete")

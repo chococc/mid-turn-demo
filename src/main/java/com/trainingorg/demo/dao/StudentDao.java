@@ -8,6 +8,8 @@ import com.trainingorg.demo.bean.Entity.ClassEntity;
 import com.trainingorg.demo.bean.Entity.StudentClassEntity;
 import com.trainingorg.demo.bean.Entity.UserEntity;
 
+import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,13 +33,15 @@ public class StudentDao {
     public List<StudentClassEntity> selectClassListByStudent() throws Exception{
         Token token=new Token();
         String username=token.Token2Username();
-        return mysqlActuator.getForList(StudentClassEntity.class, "SELECT * from studentClass where studentId='" + username + "'");
+        System.out.println("SELECT * from studentClass where studentId='" + username + "'and status=1");
+        return mysqlActuator.getForList(StudentClassEntity.class, "SELECT * from studentClass where studentId='" + username + "'and status=0");
     }
 
     public ClassEntity selectClassByInstance(StudentClassEntity studentClassEntity,String instance) throws Exception{
         if(instance==null) {
             instance = new TimeStamp().getInstance();
         }
+        System.out.println("SELECT * from classList where classId='"+studentClassEntity.getClassId()+"'AND (ClassTime1 like '+"+instance+"%'or ClassTime2 like '"+instance+"%' or ClassTime3 like '"+instance+"%')");
         return mysqlActuator.get(ClassEntity.class,"SELECT * from classList where classId='"+studentClassEntity.getClassId()+"'AND (ClassTime1 like '+"+instance+"%'or ClassTime2 like '"+instance+"%' or ClassTime3 like '"+instance+"%')");
     }
 
@@ -47,10 +51,16 @@ public class StudentDao {
         mysqlActuator.update("DELETE from studentClass where studentID='"+username+"' and classID='"+classID+"'");
     }
 
+    public int getClassStatus(String classID) throws Exception{
+        Token token=new Token();
+        String username=token.Token2Username();
+        return mysqlActuator.get(StudentClassEntity.class,"SELECT * from studentCalss where studentID='"+username+"' and classID='"+classID+"'").getStatus();
+    }
+
     public List<StudentClassEntity> notPayList() throws Exception{
         Token token=new Token();
         String username=token.Token2Username();
-        return mysqlActuator.getForList(StudentClassEntity.class,"SELECT * from studentClass where studentId='"+username+"' and pay=0");
+        return mysqlActuator.getForList(StudentClassEntity.class,"SELECT * from studentClass where studentId='"+username+"' and status=0");
     }
 
     public void payClass() throws Exception{
@@ -70,6 +80,14 @@ public class StudentDao {
         map.put("Key_classID",classID);
         mysqlActuator.update(SQLUtils.getSql("StudentClass","update",map,false,null));
     }
+
+    public StudentClassEntity selectByID(String classID) throws Exception {
+        Token token=new Token();
+        String username=token.Token2Username();
+        System.out.println("SELECT * from studentClass where studentId='" + username + "' and classID="+classID);
+        return mysqlActuator.get(StudentClassEntity.class,"SELECT * from studentClass where studentId='" + username + "' and classID="+classID);
+    }
+
     public List<StudentClassEntity> selectAll() throws Exception{
         Token token=new Token();
         String username=token.Token2Username();

@@ -14,11 +14,11 @@ public class OrgService {
     public HttpRequest addOrg(String OrgName,String OrgAddress,String managerName,String managerPassword,String telephone,String managerIdentityCard){
         try{
             orgDao.addOrg(OrgName,OrgAddress,managerName,managerPassword,telephone,managerIdentityCard);
-            httpRequest.setRequestCode(200);
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("机构添加成功 登入用户名:"+OrgName+"登入密码:"+managerPassword);
         }catch (Exception e){
             e.printStackTrace();
-            httpRequest.setRequestCode(701);
+            httpRequest.setCode(701);
             httpRequest.setRequestMessage("机构添加失败");
         }
         return httpRequest;
@@ -27,11 +27,11 @@ public class OrgService {
     public HttpRequest checkOrg(String OrgID){
         try {
             orgDao.checkOrg(OrgID);
-            httpRequest.setRequestCode(200);
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("机构审核状态已更新");
         }catch (Exception e){
             e.printStackTrace();
-            httpRequest.setRequestCode(702);
+            httpRequest.setCode(702);
             httpRequest.setRequestMessage("机构审核状态更新失败");
         }
         return httpRequest;
@@ -40,11 +40,11 @@ public class OrgService {
     public HttpRequest updateMessage(String manager,String telephone,String managerName,String managerIdentityCard){
         try{
             orgDao.updateMessage(manager,telephone,managerName,managerIdentityCard);
-            httpRequest.setRequestCode(200);
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("机构信息更新成功");
         }catch(Exception e){
             e.printStackTrace();
-            httpRequest.setRequestCode(703);
+            httpRequest.setCode(703);
             httpRequest.setRequestMessage("机构信息更新失败");
         }
         return httpRequest;
@@ -52,12 +52,12 @@ public class OrgService {
 
     public HttpRequest selectAll(){
         try{
-            httpRequest.setRequestData(JSON.toJSON(orgDao.selectAll()));
-            httpRequest.setRequestCode(200);
+            httpRequest.setData(JSON.toJSON(orgDao.selectAll()));
+            httpRequest.setCode(200);
             httpRequest.setRequestMessage("查询成功");
         }catch (Exception e){
             e.printStackTrace();
-            httpRequest.setRequestData(704);
+            httpRequest.setCode(704);
             httpRequest.setRequestMessage("查询失败");
         }
         return httpRequest;

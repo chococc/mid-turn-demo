@@ -3,6 +3,7 @@ package com.trainingorg.demo.Util;
 import com.trainingorg.demo.bean.Authenticator;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.UUID;
 
 public class Token {
@@ -27,7 +28,7 @@ public class Token {
             token = UUID.randomUUID().toString().replaceAll("-", "");
             //System.out.println(token);
             try {
-                mysqlActuator.update("UPDATE Users SET TokenId ='" + token + "' WHERE Username =" + username);
+                mysqlActuator.update("UPDATE Users SET TokenId ='" + token + "' WHERE Username ='" + username+"'");
             }catch (Exception e){
                 e.printStackTrace();
             }
