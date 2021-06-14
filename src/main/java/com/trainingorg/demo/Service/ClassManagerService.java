@@ -37,6 +37,7 @@ public class ClassManagerService {
         try{
             new Token().IdentityCheck("orgManager");
             classManagerDao.deleteClass(classID);
+
             httpRequest.setCode(200);
             httpRequest.setRequestMessage("班级信息删除成功");
         }catch (NoToken n) {
@@ -86,6 +87,25 @@ public class ClassManagerService {
         return httpRequest;
     }
 
+    public HttpRequest checkHere(String studentID,int classID){
+        HttpRequest httpRequest=new HttpRequest();
+        try{
+            classManagerDao.checkHere(studentID,classID);
+            httpRequest.setCode(200);
+            httpRequest.setRequestMessage("签到成功");
+        }catch (NoToken n) {
+            n.printStackTrace();
+            httpRequest.setCode(100);
+            httpRequest.setRequestMessage("用户未登入,或使用了非管理员账号.");
+            return httpRequest;
+        } catch (Exception e){
+            e.printStackTrace();
+            httpRequest.setCode(405);
+            httpRequest.setRequestMessage("签到失败,请联系管理员.");
+        }
+        return httpRequest;
+    }
+
     public HttpRequest selectAll(){
         HttpRequest httpRequest=new HttpRequest();
         try{
@@ -100,7 +120,7 @@ public class ClassManagerService {
             return httpRequest;
         }catch (Exception e){
             e.printStackTrace();
-            httpRequest.setCode(404);
+            httpRequest.setCode(406);
             httpRequest.setRequestMessage("数据拉取失败");
         }
         return httpRequest;

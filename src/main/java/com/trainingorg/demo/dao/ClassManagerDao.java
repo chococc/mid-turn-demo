@@ -1,7 +1,6 @@
 package com.trainingorg.demo.dao;
 
-import com.trainingorg.demo.Util.MysqlActuator;
-import com.trainingorg.demo.Util.SQLUtils;
+import com.trainingorg.demo.Util.*;
 import com.trainingorg.demo.bean.Entity.ClassEntity;
 import com.trainingorg.demo.bean.Entity.StudentClassEntity;
 
@@ -25,7 +24,6 @@ public class ClassManagerDao {
         map.put("endWeek",classEntity.getEndWeek());
         map.put("courseName",classEntity.getCourseName());
         map.put("teacherName",classEntity.getTeacherName());
-        System.out.println(SQLUtils.getSql("classList","insert",map,false,""));
         mysqlActuator.update(SQLUtils.getSql("classList","insert",map,false,""));
     }
 
@@ -54,6 +52,19 @@ public class ClassManagerDao {
         return mysqlActuator.get(ClassEntity.class,"SELECT * from classList where classID="+classID);
     }
 
+    public void checkHere(String studentID,int classID) throws Exception {
+        Token token=new Token();
+        String username=token.Token2Username();
+        ClassEntity flag=mysqlActuator.get(ClassEntity.class,"SELECT * fro classList where classID="+classID+"and teacherId='"+username+"'");
+        if(flag==null)
+            throw new NoToken("课程与任课教师不对应。");
+        Map<String,Object>map=new HashMap<>();
+        map.put("studentId",studentID);
+        map.put("classId",classID);
+        map.put("dateTime", new TimeStamp().getNowTimestamp().toString());
+        mysqlActuator.update(SQLUtils.getSql("checkHere","insert",map,false,null));
+    }
+
     public void flashStatus() throws SQLException, InvocationTargetException, InstantiationException, IllegalAccessException {
         List<ClassEntity> allClass=selectAll();
         for(ClassEntity classEntity:allClass){
@@ -61,6 +72,8 @@ public class ClassManagerDao {
             List<Long> count=mysqlActuator.getForValue("SELECT count(id) from studentClass");
             if(count.get(0)!=0&&studentClassEntities0.size()==count.get(0)){
                 mysqlActuator.update("UPDATE classList SET values(status=0) where classId="+classEntity.getClassId());
+            }else{
+                mysqlActuator.update("UPDATE classList SET values(status=1) where classId="+classEntity.getClassId());
             }
         }
     }
