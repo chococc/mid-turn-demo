@@ -31,6 +31,10 @@ public class ClassManagerController {
 
     @RequestMapping(value = "/flash")
     public HttpRequest flash(){return classManagerService.flashState();}
+
+    @RequestMapping(value = "/setTime")
+    public HttpRequest setTime(@RequestParam(value = "classId")int classId,@RequestParam(value="Time1")String time1,@RequestParam(value = "Time2")String time2,@RequestParam(value = "Time3")String time3){return classManagerService.setTime(classId,time1,time2,time3);}
+
     @RequestMapping(value = "/selectAll")
     public HttpRequest selectAll(){
         return  classManagerService.selectAll();

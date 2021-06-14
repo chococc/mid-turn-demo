@@ -73,6 +73,25 @@ public class ClassManagerService {
         return httpRequest;
     }
 
+    public HttpRequest setTime(int classId,String time1,String time2,String time3){
+        HttpRequest httpRequest=new HttpRequest();
+        try{
+            classManagerDao.setTime(classId,time1,time2,time3);
+            httpRequest.setCode(200);
+            httpRequest.setRequestMessage("班级信息修改成功!");
+        }catch (NoToken n) {
+            n.printStackTrace();
+            httpRequest.setCode(100);
+            httpRequest.setRequestMessage("用户未登入,或使用了错误的账号.");
+            return httpRequest;
+        }catch (Exception e){
+            e.printStackTrace();
+            httpRequest.setCode(403);
+            httpRequest.setRequestMessage("课程信息修改失败");
+        }
+        return httpRequest;
+    }
+
     public HttpRequest flashState(){
         HttpRequest httpRequest=new HttpRequest();
         try{
@@ -96,7 +115,7 @@ public class ClassManagerService {
         }catch (NoToken n) {
             n.printStackTrace();
             httpRequest.setCode(100);
-            httpRequest.setRequestMessage("用户未登入,或使用了非管理员账号.");
+            httpRequest.setRequestMessage("用户未登入,或使用了错误的账号.");
             return httpRequest;
         } catch (Exception e){
             e.printStackTrace();
