@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 public class CourseManagerService {
 
     protected CourseManageDao courseManageDao=new CourseManageDao();
-    protected HttpRequest httpRequest=new HttpRequest();
 
-    public HttpRequest addCourseService(String courseName){
+    public HttpRequest addCourse(String courseName){
+        HttpRequest httpRequest=new HttpRequest();
         try {
             new Token().IdentityCheck("orgManager");
             courseManageDao.addCourse(courseName);
@@ -33,7 +33,8 @@ public class CourseManagerService {
         return httpRequest;
     }
 
-    public HttpRequest deleteCourseService(String courseName){
+    public HttpRequest deleteCourse(String courseName){
+        HttpRequest httpRequest=new HttpRequest();
         try {
             new Token().IdentityCheck("orgManager");
             courseManageDao.deleteCourse(courseName);
@@ -52,7 +53,8 @@ public class CourseManagerService {
         return httpRequest;
     }
 
-    public HttpRequest editCourseService(String courseName,float cost,int state){
+    public HttpRequest editCourse(String courseName, float cost, int state){
+        HttpRequest httpRequest=new HttpRequest();
         try{
             new Token().IdentityCheck("orgManager");
             courseManageDao.editCourse(courseName,cost,state);
@@ -71,7 +73,8 @@ public class CourseManagerService {
         return httpRequest;
     }
 
-    public HttpRequest selectAllService(){
+    public HttpRequest selectAll(){
+        HttpRequest httpRequest=new HttpRequest();
         try {
             new Token().IdentityCheck("orgManager");
             httpRequest.setData(courseManageDao.selectAll());
@@ -91,6 +94,7 @@ public class CourseManagerService {
     }
 
     public HttpRequest selectByID(String courseName){
+        HttpRequest httpRequest=new HttpRequest();
         try{
             new Token().IdentityCheck("orgManager");
             httpRequest.setCode(200);

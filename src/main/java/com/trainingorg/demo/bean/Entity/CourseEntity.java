@@ -7,7 +7,6 @@ import lombok.*;
 public class CourseEntity {
 
     protected String courseName;
-    protected int courseID;
     protected float cost;
     protected int courseState;
 

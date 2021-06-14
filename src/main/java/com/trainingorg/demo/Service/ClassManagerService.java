@@ -1,6 +1,8 @@
 package com.trainingorg.demo.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.trainingorg.demo.Util.NoToken;
+import com.trainingorg.demo.Util.Token;
 import com.trainingorg.demo.bean.HttpRequest;
 import com.trainingorg.demo.dao.ClassManagerDao;
 import org.springframework.stereotype.Service;
@@ -8,14 +10,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClassManagerService {
 
-    HttpRequest httpRequest=new HttpRequest();
     ClassManagerDao classManagerDao=new ClassManagerDao();
 
-    public HttpRequest addClassManagerService(String teacherId,String courseID,int startWeek, int stopWeek){
+    public HttpRequest add(String teacherId, String courseID, int startWeek, int stopWeek){
+        HttpRequest httpRequest=new HttpRequest();
         try{
+            new Token().IdentityCheck("orgManager");
             classManagerDao.AddClass(teacherId,courseID,startWeek,stopWeek);
             httpRequest.setCode(200);
             httpRequest.setRequestMessage("班级创建成功");
+        }catch (NoToken n) {
+            n.printStackTrace();
+            httpRequest.setCode(100);
+            httpRequest.setRequestMessage("用户未登入,或使用了非管理员账号.");
+            return httpRequest;
         }catch (Exception e){
             e.printStackTrace();
             httpRequest.setCode(401);
@@ -24,11 +32,18 @@ public class ClassManagerService {
         return httpRequest;
     }
 
-    public HttpRequest deleteClassService(String classID){
+    public HttpRequest delete(String classID){
+        HttpRequest httpRequest=new HttpRequest();
         try{
+            new Token().IdentityCheck("orgManager");
             classManagerDao.deleteClass(classID);
             httpRequest.setCode(200);
             httpRequest.setRequestMessage("班级信息删除成功");
+        }catch (NoToken n) {
+            n.printStackTrace();
+            httpRequest.setCode(100);
+            httpRequest.setRequestMessage("用户未登入,或使用了非管理员账号.");
+            return httpRequest;
         }catch (Exception e){
             e.printStackTrace();
             httpRequest.setCode(402);
@@ -37,11 +52,18 @@ public class ClassManagerService {
         return httpRequest;
     }
 
-    public HttpRequest updateClassService(String teacherId,String courseID,int startTime, int stopTime){
+    public HttpRequest update(String teacherId, String courseID, int startTime, int stopTime){
+        HttpRequest httpRequest=new HttpRequest();
         try{
+            new Token().IdentityCheck("orgManager");
             classManagerDao.updateClass(teacherId,courseID,startTime,stopTime);
             httpRequest.setCode(200);
             httpRequest.setRequestMessage("班级信息修改成功");
+        }catch (NoToken n) {
+            n.printStackTrace();
+            httpRequest.setCode(100);
+            httpRequest.setRequestMessage("用户未登入,或使用了非管理员账号.");
+            return httpRequest;
         }catch (Exception e){
             e.printStackTrace();
             httpRequest.setCode(403);
@@ -50,11 +72,31 @@ public class ClassManagerService {
         return httpRequest;
     }
 
-    public HttpRequest selectAll(){
+    public HttpRequest flashState(){
+        HttpRequest httpRequest=new HttpRequest();
         try{
+            classManagerDao.flashStatus();
+            httpRequest.setCode(200);
+            httpRequest.setRequestMessage("班级状态已更新");
+        }catch(Exception e){
+            e.printStackTrace();
+            httpRequest.setCode(404);
+            httpRequest.setRequestMessage("班级状态更新失败");
+        }
+        return httpRequest;
+    }
+    public HttpRequest selectAll(){
+        HttpRequest httpRequest=new HttpRequest();
+        try{
+            new Token().IdentityCheck("orgManager");
             httpRequest.setData(JSON.toJSON(classManagerDao.selectAll()));
             httpRequest.setCode(200);
             httpRequest.setRequestMessage("数据拉取成功");
+        }catch (NoToken n) {
+            n.printStackTrace();
+            httpRequest.setCode(100);
+            httpRequest.setRequestMessage("用户未登入,或使用了非管理员账号.");
+            return httpRequest;
         }catch (Exception e){
             e.printStackTrace();
             httpRequest.setCode(404);

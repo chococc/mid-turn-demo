@@ -13,17 +13,17 @@ public class ClassManagerController {
     ClassManagerService classManagerService=new ClassManagerService();
     @RequestMapping(value = "/add")
     public HttpRequest addClassController(@RequestParam(value = "teacherID",required = false) String teacherID,@RequestParam(value = "courseID",required = false) String courseID,@RequestParam(value = "startTime",required = false) int startWeek,@RequestParam(value = "stopTime",required = false) int stopWeek){
-        return classManagerService.addClassManagerService(teacherID,courseID,startWeek,stopWeek);
+        return classManagerService.add(teacherID,courseID,startWeek,stopWeek);
     }
 
     @RequestMapping(value = "/delete")
     public HttpRequest deleteClassController(@RequestParam(value = "classID",required = false) String classID){
-        return classManagerService.deleteClassService(classID);
+        return classManagerService.delete(classID);
     }
 
     @RequestMapping(value = "/update")
     public HttpRequest updateClassController(@RequestParam(value = "teacherID",required = false) String teacherID,@RequestParam(value = "courseID",required = false) String courseID,@RequestParam(value = "startTime",required = false) int startTime,@RequestParam(value = "stopTime",required = false) int stopTime){
-        return classManagerService.updateClassService(teacherID,courseID,startTime,stopTime);
+        return classManagerService.update(teacherID,courseID,startTime,stopTime);
     }
 
     @RequestMapping(value = "/selectAll")

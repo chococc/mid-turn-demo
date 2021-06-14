@@ -3,6 +3,7 @@ package com.trainingorg.demo.dao;
 import com.trainingorg.demo.Util.MysqlActuator;
 import com.trainingorg.demo.Util.SQLUtils;
 import com.trainingorg.demo.bean.Entity.ClassEntity;
+import com.trainingorg.demo.bean.Entity.StudentClassEntity;
 
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
@@ -51,5 +52,16 @@ public class ClassManagerDao {
 
     public ClassEntity selectByID(String classID) throws SQLException, InvocationTargetException, InstantiationException, IllegalAccessException {
         return mysqlActuator.get(ClassEntity.class,"SELECT * from classList where classID="+classID);
+    }
+
+    public void flashStatus() throws SQLException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        List<ClassEntity> allClass=selectAll();
+        for(ClassEntity classEntity:allClass){
+            List<StudentClassEntity> studentClassEntities0= mysqlActuator.getForList(StudentClassEntity.class,"SELECT * from studentClass where classId ="+classEntity.getClassId()+"and status=0");
+            List<Long> count=mysqlActuator.getForValue("SELECT count(id) from studentClass");
+            if(count.get(0)!=0&&studentClassEntities0.size()==count.get(0)){
+                mysqlActuator.update("UPDATE classList SET values(status=0) where classId="+classEntity.getClassId());
+            }
+        }
     }
 }
