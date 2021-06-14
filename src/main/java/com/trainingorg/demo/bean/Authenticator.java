@@ -24,7 +24,7 @@ public class Authenticator {
      */
     public RequestMessage Conformer(String username, String password){
         try {
-            ResultSet rs = new MysqlActuator().getResultSet_Select("select * from Users where username = " + username);
+            ResultSet rs = new MysqlActuator().getResultSet_Select("select * from Users where username = '" + username+"'");
             if(!rs.next()){
                 return new RequestMessage().LoginMessage_NoUser();
             }

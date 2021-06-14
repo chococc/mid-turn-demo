@@ -68,14 +68,16 @@ public class ClassManagerDao {
     public void setTime(int classID,String time1,String time2,String time3) throws Exception {
         Token token=new Token();
         String username=token.Token2Username();
-        ClassEntity flag=mysqlActuator.get(ClassEntity.class,"SELECT * fro classList where classID="+classID+"and teacherId='"+username+"'");
+        //System.out.println("SELECT * fro classList where classID="+classID+"and teacherId='"+username+"'");
+        ClassEntity flag=mysqlActuator.get(ClassEntity.class,"SELECT * from classList where classID="+classID+" and teacherId='"+username+"'");
         if(flag==null)
             throw new NoToken("课程与任课教师不对应。");
         Map<String,Object>map=new HashMap<>();
         map.put("classTime1",time1);
         map.put("classTime2",time2);
         map.put("classTime3",time3);
-        map.put("key_classId",classID);
+        map.put("Key_classId",classID);
+        //System.out.println(SQLUtils.getSql("classList","update",map,false,null));
         mysqlActuator.update(SQLUtils.getSql("classList","update",map,false,null));
     }
 
