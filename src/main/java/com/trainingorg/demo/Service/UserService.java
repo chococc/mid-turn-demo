@@ -1,5 +1,6 @@
 package com.trainingorg.demo.Service;
 
+import com.trainingorg.demo.Util.NoToken;
 import com.trainingorg.demo.Util.TimeStamp;
 import com.trainingorg.demo.bean.HttpRequest;
 import com.trainingorg.demo.Util.MysqlActuator;
@@ -43,6 +44,7 @@ public class UserService {
 
     public HttpRequest deleteUserService(String username) {
         try {
+            new Token().IdentityCheck("orgManager");
             if (loginUserDao.existID(username)) {
                 try {
                     mysqlActuator.update("DELETE FROM Users where Username='" + username + "'");
@@ -58,18 +60,27 @@ public class UserService {
                 httpRequest.setRequestMessage("用户删除不存在");
             }
             httpRequest.setData(null);
-        } catch (Exception e) {
+        } catch (NoToken n) {
+            n.printStackTrace();
+            httpRequest.setCode(100);
+            httpRequest.setRequestMessage("用户未登入,或使用了非管理员账号.");
+            return httpRequest;
+        }catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return httpRequest;
     }
 
     public HttpRequest deleteUserByTokenService() {
-        String Token = new Token().getToken_Cookie();
         try {
-            mysqlActuator.update("DELETE FROM Users where TokenId='" + Token + "'");
+            loginUserDao.deleteByToken();
             httpRequest.setCode(200);
             httpRequest.setRequestMessage("用户删除成功");
+        }catch (NoToken n) {
+            n.printStackTrace();
+            httpRequest.setCode(100);
+            httpRequest.setRequestMessage("用户未登入");
+            return httpRequest;
         } catch (Exception e) {
             httpRequest.setCode(203);
             httpRequest.setRequestMessage("用户删除失败");
@@ -81,10 +92,16 @@ public class UserService {
 
     public HttpRequest editUsers_service(String username, String name, String identity, String phone, String Org) {
         try {
+            new Token().IdentityCheck("OrgManager");
             loginUserDao.editUsers(username,name,identity,phone,Org);
             httpRequest.setCode(200);
             httpRequest.setRequestMessage("用户信息修改成功");
-        } catch (Exception e) {
+        } catch (NoToken n) {
+            n.printStackTrace();
+            httpRequest.setCode(100);
+            httpRequest.setRequestMessage("用户未登入,或使用了非管理员账号.");
+            return httpRequest;
+        }catch (Exception e) {
             httpRequest.setCode(204);
             httpRequest.setRequestMessage("用户信息修改失败");
             System.out.println(e.getMessage());
@@ -97,7 +114,12 @@ public class UserService {
                 loginUserDao.editUsers_Token(name,identity,phone,Org);
                 httpRequest.setCode(200);
                 httpRequest.setRequestMessage("用户信息修改成功");
-            } catch (Exception e) {
+            } catch (NoToken n) {
+                n.printStackTrace();
+                httpRequest.setCode(100);
+                httpRequest.setRequestMessage("用户未登入");
+                return httpRequest;
+            }catch (Exception e) {
                 httpRequest.setCode(204);
                 httpRequest.setRequestMessage("用户信息修改失败");
                 System.out.println(e.getMessage());
@@ -107,9 +129,15 @@ public class UserService {
 
     public HttpRequest selectUserSelectAll() {
         try {
+            new Token().IdentityCheck("OrgManager");
             httpRequest.setData(loginUserDao.selectAll());
             httpRequest.setCode(200);
             httpRequest.setRequestMessage("用户信息拉取成功");
+        }catch (NoToken n) {
+            n.printStackTrace();
+            httpRequest.setCode(100);
+            httpRequest.setRequestMessage("用户未登入,或使用了非机构管理员账号.");
+            return httpRequest;
         }catch (Exception e){
             httpRequest.setCode(104);
             httpRequest.setRequestMessage("拉取用户信息失败");
@@ -120,9 +148,15 @@ public class UserService {
 
     public HttpRequest selectUserSelectByIDService(String username){
         try {
+            new Token().IdentityCheck("orgManager");
             httpRequest.setData(loginUserDao.selectAllByID(username));
             httpRequest.setCode(200);
             httpRequest.setRequestMessage("用户信息拉取成功");
+        }catch (NoToken n) {
+            n.printStackTrace();
+            httpRequest.setCode(100);
+            httpRequest.setRequestMessage("用户未登入,或使用了非管理员账号.");
+            return httpRequest;
         }catch (Exception e){
             httpRequest.setCode(104);
             httpRequest.setRequestMessage("拉取用户信息失败");

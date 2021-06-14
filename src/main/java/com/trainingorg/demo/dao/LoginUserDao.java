@@ -1,6 +1,7 @@
 package com.trainingorg.demo.dao;
 
 import com.trainingorg.demo.Util.MysqlActuator;
+import com.trainingorg.demo.Util.NoToken;
 import com.trainingorg.demo.Util.SQLUtils;
 import com.trainingorg.demo.Util.Token;
 import com.trainingorg.demo.bean.Entity.UserEntity;
@@ -40,6 +41,15 @@ public class LoginUserDao {
         mysqlActuator.update(SQLUtils.getSql("users","update",map,false,null));
     }
 
+    public void delete(String username) throws SQLException {
+        mysqlActuator.update("DELETE FROM Users where username='" + username + "'");
+    }
+
+    public void deleteByToken() throws SQLException, NoToken {
+        Token token=new Token();
+        String username=token.Token2Username();
+        mysqlActuator.update("DELETE FROM Users where username='" + username + "'");
+    }
     public void editUsers(String username,String name,String identity,String phone,String Org) throws Exception{
         //mysqlActuator.update("UPDATE Users SET NAME='" + name + "',identify='" + identity + "',telephone='" + phone + "',ORG='" + Org + "' where username='" + username + "'");
         Map<String,Object> map=new HashMap<>();
