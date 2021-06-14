@@ -13,7 +13,6 @@ public class ClassEntity {
 
     protected int classId;
     protected String teacherId;
-    protected String courseId;
     protected String teacherName;
     protected String courseName;
     protected int startWeek;
@@ -24,9 +23,8 @@ public class ClassEntity {
 
     public ClassEntity(String teacherId,String courseId,int startWeek,int stopWeek) throws Exception {
         this.teacherId=teacherId;
-        this.courseId=courseId;
         teacherName = mysqlActuator.get(UserEntity.class,"SELECT * from Users where username='" + teacherId + "' AND identify='teacher'").getName();
-        courseName = mysqlActuator.get(CourseEntity.class,"SELECT * from CourseList where courseID="+courseId).getCourseName();
+        courseName = mysqlActuator.get(CourseEntity.class,"SELECT * from CourseList where courseName='"+courseId+"'").getCourseName();
         this.startWeek=startWeek;
         this.endWeek =stopWeek;
     }

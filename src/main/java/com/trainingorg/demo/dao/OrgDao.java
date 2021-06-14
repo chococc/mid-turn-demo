@@ -59,7 +59,8 @@ public class OrgDao {
         map.put("managerIdentityCard",managerIdentityCard);
         map.put("checkout",0);
         map.put("Key_Id",Token2OrgID());
-        mysqlActuator.update(SQLUtils.getSql("OrgList","update",map,false,""));
+        //System.out.println(SQLUtils.getSql("OrgList","update",map,false,null));
+        mysqlActuator.update(SQLUtils.getSql("OrgList","update",map,false,null));
     }
 
     public List<OrgEntity> selectAll() throws SQLException, InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -69,6 +70,6 @@ public class OrgDao {
     public int Token2OrgID() throws SQLException, InvocationTargetException, IllegalAccessException, InstantiationException, NoToken {
         Token token=new Token();
         String username=token.Token2Username();
-        return mysqlActuator.get(OrgEntity.class,"SELECT * FROM OrgList where manager='"+username+"'").getOrgId();
+        return mysqlActuator.get(OrgEntity.class,"SELECT * FROM OrgList where manager='"+username+"'").getId();
     }
 }

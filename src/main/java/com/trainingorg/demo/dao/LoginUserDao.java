@@ -27,7 +27,7 @@ public class LoginUserDao {
     }
 
     public UserEntity selectByActiveID(String id) throws SQLException, InvocationTargetException, IllegalAccessException, InstantiationException {
-        return mysqlActuator.get(UserEntity.class,"SELECT * FROM users where username='"+id+"' and status=1");
+        return mysqlActuator.get(UserEntity.class,"SELECT * FROM users where username='"+id+"' and userState=1");
     }
     public UserEntity selectByID(String id) throws SQLException, InvocationTargetException, IllegalAccessException, InstantiationException {
         return mysqlActuator.get(UserEntity.class,"SELECT * FROM users where username='"+id+"'");

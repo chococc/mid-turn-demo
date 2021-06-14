@@ -53,11 +53,11 @@ public class ClassManagerService {
         return httpRequest;
     }
 
-    public HttpRequest update(String teacherId, String courseID, int startTime, int stopTime){
+    public HttpRequest update(String teacherId, String courseID, int startWeek, int stopWeek){
         HttpRequest httpRequest=new HttpRequest();
         try{
             new Token().IdentityCheck("orgManager");
-            classManagerDao.updateClass(teacherId,courseID,startTime,stopTime);
+            classManagerDao.updateClass(teacherId,courseID,startWeek,stopWeek);
             httpRequest.setCode(200);
             httpRequest.setRequestMessage("班级信息修改成功");
         }catch (NoToken n) {

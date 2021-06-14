@@ -19,11 +19,11 @@ public class ClassManagerDao {
         //mysqlActuator.update("INSERT INTO classList(teacherId,courseId,startWeek,endWeek,courseName,teacherName) Values('"+classEntity.getTeacherId()+"','"+classEntity.getCourseId()+"','"+classEntity.getStartWeek()+"','"+classEntity.getEndWeek()+"','"+classEntity.getCourseName()+"','"+classEntity.getTeacherName()+"')");
         Map<String,Object> map=new HashMap<>();
         map.put("teacherId",classEntity.getTeacherId());
-        map.put("courseID",classEntity.getCourseId());
         map.put("startWeek",classEntity.getStartWeek());
         map.put("endWeek",classEntity.getEndWeek());
         map.put("courseName",classEntity.getCourseName());
         map.put("teacherName",classEntity.getTeacherName());
+        System.out.println(SQLUtils.getSql("classList","insert",map,false,""));
         mysqlActuator.update(SQLUtils.getSql("classList","insert",map,false,""));
     }
 
@@ -36,7 +36,6 @@ public class ClassManagerDao {
         //mysqlActuator.update("UPDATE classList SET teacherId='"+classEntity.getTeacherName()+"',courseId='"+classEntity.getCourseId()+"',startTime='"+classEntity.getStartWeek()+"',stopTime='"+classEntity.getEndWeek()+"',courseName='"+classEntity.getCourseName()+"',teacherName='"+classEntity.getTeacherName()+"'");
         Map<String,Object> map=new HashMap<>();
         map.put("teacherId",classEntity.getTeacherId());
-        map.put("courseID",classEntity.getCourseId());
         map.put("startWeek",classEntity.getStartWeek());
         map.put("endWeek",classEntity.getEndWeek());
         map.put("courseName",classEntity.getCourseName());

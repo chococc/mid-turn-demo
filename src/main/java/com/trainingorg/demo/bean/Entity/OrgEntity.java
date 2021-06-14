@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class OrgEntity {
 
-    protected int OrgId;
-    protected String OrgName;
+    protected int id;
+    protected String orgName;
     protected String manager;
     protected String managerName;
     protected String managerIdentityCard;

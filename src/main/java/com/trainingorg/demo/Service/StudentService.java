@@ -90,8 +90,8 @@ public class StudentService {
             for(StudentClassEntity studentClassEntity:notPayList){
                 classEntity= new ClassManagerDao().selectByID(studentClassEntity.getClassId());
                 System.out.println(studentClassEntity.getClassId());
-                course=new CourseManageDao().selectById(classEntity.getCourseId());
-                System.out.println(classEntity.getCourseId());
+                course=new CourseManageDao().selectById(classEntity.getCourseName());
+                System.out.println(classEntity.getCourseName());
                 total+=course.getCost();
             }
             httpRequest.setRequestMessage("共计需支付 "+total+" 元");
