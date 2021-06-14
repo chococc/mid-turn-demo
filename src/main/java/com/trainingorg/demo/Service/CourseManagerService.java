@@ -68,7 +68,7 @@ public class CourseManagerService {
         try{
             httpRequest.setCode(200);
             httpRequest.setRequestMessage("数据拉取成功");
-            httpRequest.setData(courseManageDao.selectByID(courseName));
+            httpRequest.setData(courseManageDao.selectByName(courseName));
         }catch (Exception e){
             e.printStackTrace();
             httpRequest.setCode(306);

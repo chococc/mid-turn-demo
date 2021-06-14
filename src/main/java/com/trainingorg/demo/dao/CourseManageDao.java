@@ -43,7 +43,12 @@ public class CourseManageDao {
         return mysqlActuator.getForList(CourseEntity.class, "SELECT * from CourseList");
     }
 
-    public CourseEntity selectByID(String courseName) throws SQLException, InvocationTargetException, InstantiationException, IllegalAccessException {
+
+    public CourseEntity selectById(String id) throws Exception{
+        return mysqlActuator.get(CourseEntity.class,"SELECT * FROM CourseList where courseID="+id);
+    }
+
+    public CourseEntity selectByName(String courseName) throws Exception {
         return mysqlActuator.get(CourseEntity.class,"SELECT * FROM CourseList where courseName LIKE '"+courseName+"'");
     }
 }

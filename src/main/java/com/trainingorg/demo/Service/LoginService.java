@@ -46,12 +46,6 @@ public class LoginService {
         return httpRequest;
     }
 
-    public void check_login_service_strong() throws check_login_service_strong_Exception {
-        String Token=new Token().getToken_Cookie();
-        if(Token==null)
-            throw new check_login_service_strong_Exception();
-    }
-
     public HttpRequest logout_service(){
 
         String token = new Token().getToken_Cookie();
@@ -79,11 +73,5 @@ public class LoginService {
             System.out.println(e.getMessage());
         }
         return httpRequest;
-    }
-}
-
-class check_login_service_strong_Exception extends Exception{
-    public check_login_service_strong_Exception() {
-        super("当前请求未登入");
     }
 }

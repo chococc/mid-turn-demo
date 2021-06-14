@@ -1,6 +1,7 @@
 package com.trainingorg.demo.dao;
 
 import com.trainingorg.demo.Util.MysqlActuator;
+import com.trainingorg.demo.Util.NoToken;
 import com.trainingorg.demo.Util.SQLUtils;
 import com.trainingorg.demo.Util.Token;
 import com.trainingorg.demo.bean.Entity.OrgEntity;
@@ -64,7 +65,7 @@ public class OrgDao {
         return mysqlActuator.getForList(OrgEntity.class,"SELECT * from OrgList");
     }
 
-    public int Token2OrgID() throws SQLException, InvocationTargetException, IllegalAccessException, InstantiationException {
+    public int Token2OrgID() throws SQLException, InvocationTargetException, IllegalAccessException, InstantiationException, NoToken {
         Token token=new Token();
         String username=token.Token2Username();
         return mysqlActuator.get(OrgEntity.class,"SELECT * FROM OrgList where manager="+username).getOrgId();

@@ -3,13 +3,10 @@ package com.trainingorg.demo;
 import com.trainingorg.demo.Service.ClassManagerService;
 import com.trainingorg.demo.Service.KnowledgeService;
 import com.trainingorg.demo.Service.LoginService;
-import com.trainingorg.demo.bean.Authenticator;
 import com.trainingorg.demo.Util.MysqlConnector;
 import com.trainingorg.demo.Util.Token;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.sql.SQLException;
 
 @SpringBootTest
 class MidTurnDemoApplicationTests {
@@ -21,7 +18,6 @@ class MidTurnDemoApplicationTests {
 
     @Test
     void AccessCodeTest() {
-        Authenticator authenticator=new Authenticator();
         System.out.println(new LoginService().user_login_service("1","pass").getCode());
     }
 
@@ -31,7 +27,7 @@ class MidTurnDemoApplicationTests {
     }
 
     @Test
-    void GetTokenTest() throws SQLException {
+    void GetTokenTest() {
         System.out.println(new Token().getToken_test("1","pass"));
     }
 

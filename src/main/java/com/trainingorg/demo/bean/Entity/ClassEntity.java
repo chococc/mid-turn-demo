@@ -4,10 +4,6 @@ import com.trainingorg.demo.Util.MysqlActuator;
 import com.trainingorg.demo.Util.TimeStamp;
 import lombok.*;
 
-import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-
 @Data
 
 public class ClassEntity {
@@ -22,6 +18,7 @@ public class ClassEntity {
     protected String courseName;
     protected int startWeek;
     protected int endWeek;
+    protected int status;
 
     public ClassEntity(){}
 

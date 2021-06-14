@@ -38,6 +38,9 @@ public class StudentController {
         return studentService.getPay();
     }
 
+    @RequestMapping("/grade")
+    public HttpRequest grade(@RequestParam(value = "classID",required = false)int classID,@RequestParam(value = "grade",required = false)int grade){return studentService.score(classID,grade);}
+
     @RequestMapping(value = "/delete")
     public HttpRequest delete(@RequestParam(value = "classID",required = false)String classID){
         return studentService.deleteClass(classID);
