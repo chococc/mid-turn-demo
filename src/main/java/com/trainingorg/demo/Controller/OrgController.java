@@ -18,13 +18,13 @@ public class OrgController {
     }
 
     @RequestMapping(value = "/check")
-    public HttpRequest check(@RequestParam("OrgID") String OrgID){
+    public HttpRequest check(@RequestParam("OrgName") String OrgID){
         return orgService.checkOrg(OrgID);
     }
 
     @RequestMapping(value="/update")
-    public HttpRequest update(@RequestParam("manager") String manager,@RequestParam("telephone") String telephone,@RequestParam("managerName") String managerName,@RequestParam("managerIdeneityCard") String managerIdentityCard){
-        return orgService.updateMessage(manager,telephone,managerName,managerIdentityCard);
+    public HttpRequest update(@RequestParam("telephone") String telephone,@RequestParam("managerName") String managerName,@RequestParam("managerIdeneityCard") String managerIdentityCard){
+        return orgService.updateMessage(telephone,managerName,managerIdentityCard);
     }
 
     @RequestMapping(value = "/selectAll")

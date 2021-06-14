@@ -27,18 +27,18 @@ public class SQLUtils {
             }
             // 操作标识 默认为 select
             String operations = "select";
-            StringBuilder condition = new StringBuilder(" * from " + tableName + " a where ");
+            StringBuilder condition = new StringBuilder(" * from " + tableName + " where ");
             if (operation != null && !operation.equals("")) {
                 switch (operation) {
                     case "update":
                     case "UPDATE":
                         operations = "update";
-                        condition = new StringBuilder(" " + tableName + " a set ");
+                        condition = new StringBuilder(" " + tableName + " set ");
                         break;
                     case "delete":
                     case "DELETE":
                         operations = "delete";
-                        condition = new StringBuilder(" from " + tableName + " a where ");
+                        condition = new StringBuilder(" from " + tableName + " where ");
                         break;
                     case "insert":
                     case "INSERT":

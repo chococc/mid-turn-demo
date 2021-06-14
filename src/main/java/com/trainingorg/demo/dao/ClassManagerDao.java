@@ -55,9 +55,12 @@ public class ClassManagerDao {
     public void checkHere(String studentID,int classID) throws Exception {
         Token token=new Token();
         String username=token.Token2Username();
-        ClassEntity flag=mysqlActuator.get(ClassEntity.class,"SELECT * fro classList where classID="+classID+"and teacherId='"+username+"'");
+        ClassEntity flag=mysqlActuator.get(ClassEntity.class,"SELECT * from classList where classID="+classID+" and teacherId='"+username+"'");
+        StudentClassEntity flag2=mysqlActuator.get(StudentClassEntity.class,"SELECT * from studentclass where classID="+classID+" and studentId='"+studentID+"'");
         if(flag==null)
             throw new NoToken("课程与任课教师不对应。");
+        if(flag2==null)
+            throw new NoToken("该学生并未选择本课程。");
         Map<String,Object>map=new HashMap<>();
         map.put("studentId",studentID);
         map.put("classId",classID);

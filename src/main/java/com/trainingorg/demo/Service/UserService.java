@@ -17,7 +17,7 @@ public class UserService {
     protected LoginUserDao loginUserDao =new LoginUserDao();
     protected MysqlActuator mysqlActuator = new MysqlActuator();
 
-    public HttpRequest addUserService(String username, String password) {
+    public HttpRequest add(String username, String password) {
         HttpRequest httpRequest=new HttpRequest();
         Timestamp timestamp= new TimeStamp().getNowTimestamp();
         try {
@@ -42,7 +42,7 @@ public class UserService {
         return httpRequest;
     }
 
-    public HttpRequest deleteUserService(String username) {
+    public HttpRequest delete(String username) {
         HttpRequest httpRequest=new HttpRequest();
         try {
             new Token().IdentityCheck("orgManager");
@@ -72,7 +72,7 @@ public class UserService {
         return httpRequest;
     }
 
-    public HttpRequest deleteUserByTokenService() {
+    public HttpRequest deleteUserByToken() {
         HttpRequest httpRequest=new HttpRequest();
         try {
             loginUserDao.deleteByToken();
@@ -92,7 +92,7 @@ public class UserService {
         return httpRequest;
     }
 
-    public HttpRequest editUsers_service(String username, String name, String identity, String phone, String Org) {
+    public HttpRequest editUsers(String username, String name, String identity, String phone, String Org) {
         HttpRequest httpRequest=new HttpRequest();
         try {
             new Token().IdentityCheck("OrgManager");
@@ -112,7 +112,7 @@ public class UserService {
         return httpRequest;
     }
 
-    public HttpRequest editUsersCustomerService(String name, String identity, String phone, String Org) {
+    public HttpRequest editUsersCustomer(String name, String identity, String phone, String Org) {
         HttpRequest httpRequest=new HttpRequest();
             try {
                 loginUserDao.editUsers_Token(name,identity,phone,Org);
@@ -131,7 +131,7 @@ public class UserService {
         return httpRequest;
     }
 
-    public HttpRequest selectUserSelectAll() {
+    public HttpRequest SelectAll() {
         HttpRequest httpRequest=new HttpRequest();
         try {
             new Token().IdentityCheck("OrgManager");
@@ -151,7 +151,7 @@ public class UserService {
         return httpRequest;
     }
 
-    public HttpRequest selectUserSelectByIDService(String username){
+    public HttpRequest SelectByID(String username){
         HttpRequest httpRequest=new HttpRequest();
         try {
             new Token().IdentityCheck("orgManager");

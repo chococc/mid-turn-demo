@@ -12,8 +12,6 @@ public class OrgEntity {
     protected String managerIdentityCard;
     protected String telephone;
     protected String address;
-    protected String check;
-    protected int status;
+    protected int checkout;
 
-    OrgEntity(){}
 }

@@ -14,7 +14,7 @@ public class LoginService {
     public HttpRequest user_login_service(String username, String password){
         String Token;
     try {
-        if (loginUserDao.selectByID(username).getPassword().equals(password)) {
+        if (loginUserDao.selectByActiveID(username).getPassword().equals(password)) {
             Token = new Token().getToken_login(username, password);
             httpRequest.setCode(200);
             httpRequest.setRequestMessage("登入成功");

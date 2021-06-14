@@ -115,7 +115,7 @@ public class ClassManagerService {
         }catch (NoToken n) {
             n.printStackTrace();
             httpRequest.setCode(100);
-            httpRequest.setRequestMessage("用户未登入,或使用了错误的账号.");
+            httpRequest.setRequestMessage("签到信息错误,请查看后台信息.");
             return httpRequest;
         } catch (Exception e){
             e.printStackTrace();
