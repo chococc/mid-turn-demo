@@ -57,7 +57,7 @@ public class StudentDao {
     public List<StudentClassEntity> notPayList() throws NoToken, SQLException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Token token=new Token();
         String username=token.Token2Username();
-        return mysqlActuator.getForList(StudentClassEntity.class,"SELECT * from studentClass where studentId='"+username+"' and status=0");
+        return mysqlActuator.getForList(StudentClassEntity.class,"SELECT * from studentClass where studentId='"+username+"' and status=-1");
     }
 
     public void payClass() throws Exception{

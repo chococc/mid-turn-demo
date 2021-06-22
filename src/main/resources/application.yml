@@ -1,10 +1,79 @@
+#本地开发环境配置中心
+
 spring:
+  application:
+    name: springboot-webAdmin
+  jpa:
+    show-sql: true
+    database: mysql
+    #generate-ddl: true
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      naming:
+        #解决使用其他库的表时候，把小数点变成下划线，导致sql无法成功执行。
+        #这是由于物理命名策略引起的，大写字母变小写，加_下划线（hibernate5以上高版本）
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      #ddl-auto: update
+    #ddl-auto: update
   datasource:
+    url: jdbc:mysql://39.103.196.184:3306/trainingorg?characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: root
+    password: Kinoko@7
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: "root"
-    password: "Kinoko@7"
-    url: "jdbc:mysql://39.103.196.184:3306/TrainingOrg"
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      auto-commit: true
+      minimum-idle: 2
+      idle-timeout: 60000
+      connection-timeout: 30000
+      max-lifetime: 1800000
+      pool-name: DatebookHikariCP
+  #thymeleaf模板配置
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+    #严格执行H5标准
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+  #content-type: text/html
+  #静态资源路径
   mvc:
     view:
-      prefix: /pages/
+      prefix: classpath:/static/page/
       suffix: .html
+  web:
+    resources:
+      chain:
+        strategy:
+          content:
+            enabled: true
+            paths: /**
+#项目端口
+server:
+  port: 8080
+  #设置tomcat参数
+  tomcat:
+    uri-encoding: utf-8
+    max-connections: 10000
+    #最大220个并发，可以达到不丢包（可以自己实测），默认为200。
+    #配置访问路径，默认为/
+    #servlet:
+    #context-path: /index/main
+    threads:
+      min-spare: 10
+      max: 220
+
+
+
+#配置日志文件参数
+logging:
+  file:
+    path: F:/myLog/adminLog.log
+  level:
+    org:
+      springframework: debug
+    hibernate: debug

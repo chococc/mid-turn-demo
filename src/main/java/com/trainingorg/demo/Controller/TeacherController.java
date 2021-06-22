@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value="/teacher")
 public class TeacherController {
 
-    TeacherService teacherService = new TeacherService();
+    TeacherService teacherService;
 
     @RequestMapping(value = "/getClass")
     public HttpRequest getClass(@RequestParam(value = "instance") String instance) {

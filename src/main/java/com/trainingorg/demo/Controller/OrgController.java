@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/Org")
 public class OrgController {
 
-    OrgService orgService=new OrgService();
+    protected OrgService orgService;
 
     @RequestMapping(value="/add")
     public HttpRequest add(@RequestParam(value = "OrgName") String OrgName,@RequestParam(value = "OrgAddress") String OrgAddress,@RequestParam("managerName") String managerName,@RequestParam("managerPassword") String managerPassword,@RequestParam("telephone") String telephone,@RequestParam("managerIdentityCard") String managerIdentityCard){
-        return orgService.addOrg(OrgName,OrgAddress,managerName,managerPassword,telephone,managerIdentityCard);
+        return orgService.add(OrgName,OrgAddress,managerName,managerPassword,telephone,managerIdentityCard);
     }
 
     @RequestMapping(value = "/check")
     public HttpRequest check(@RequestParam("OrgName") String OrgID){
-        return orgService.checkOrg(OrgID);
+        return orgService.check(OrgID);
     }
 
     @RequestMapping(value="/update")

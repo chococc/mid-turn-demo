@@ -31,13 +31,14 @@ public class TeacherDao {
     }
 
     public List<StudentClassEntity> getStudentList(String classID) throws Exception{
-        return mysqlActuator.getForList(StudentClassEntity.class,"SELECT * FROM studentClass where classID='+"+classID+"'");
+        return mysqlActuator.getForList(StudentClassEntity.class,"SELECT * FROM studentClass where classID='+"+classID+"' and status=1");
     }
 
     public void setGrade(int classID,String studentID,int grade) throws Exception{
         //mysqlActuator.update("UPDATE studentClass SET grade="+grade+" where classID='"+classID+"' and studentID='"+studentID+"'");
         Map<String,Object> map=new HashMap<>();
         map.put("studentGrade",grade);
+        map.put("status",0);
         map.put("Key_classID",classID);
         map.put("Key_studentID",studentID);
         mysqlActuator.update(SQLUtils.getSql("StudentClass","update",map,false,""));

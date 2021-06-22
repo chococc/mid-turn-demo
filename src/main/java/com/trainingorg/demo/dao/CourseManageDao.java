@@ -18,7 +18,7 @@ public class CourseManageDao {
         //mysqlActuator.update("INSERT INTO CourseList(courseName) Values('" + courseName + "')");
         Map<String,String> map=new HashMap<>();
         map.put("courseName",courseName);
-        mysqlActuator.update(SQLUtils.getSql("CourseList","update",map,false,""));
+        mysqlActuator.update(SQLUtils.getSql("CourseList","insert",map,false,""));
     }
 
     public void deleteCourse(String courseName) throws Exception {

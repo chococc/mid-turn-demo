@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class KnowledgeController {
 
     protected HttpRequest httpRequest=new HttpRequest();
-    protected KnowledgeService knowledgeService=new KnowledgeService();
+    protected KnowledgeService knowledgeService;
 
     @RequestMapping("")
     public HttpRequest run(@RequestParam("id") String id){

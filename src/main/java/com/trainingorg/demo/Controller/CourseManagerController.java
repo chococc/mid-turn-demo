@@ -11,24 +11,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class CourseManagerController {
 
-    protected CourseManagerService courseManagerService =new CourseManagerService();
+    protected CourseManagerService courseManagerService;
+
     protected HttpRequest httpRequest=new HttpRequest();
 
     @RequestMapping(value = "/add")
     public HttpRequest addCourse(@RequestParam(value = "coursename",required = false) String coursename){
-        httpRequest= courseManagerService.addCourse(coursename);
+        httpRequest= courseManagerService.add(coursename);
         return httpRequest;
     }
 
     @RequestMapping(value = "/delete")
     public HttpRequest deleteCourse(@RequestParam(value="coursename",required = false) String coursename){
-        httpRequest= courseManagerService.deleteCourse(coursename);
+        httpRequest= courseManagerService.delete(coursename);
         return httpRequest;
     }
 
     @RequestMapping(value = "/edit")
     public HttpRequest editCourse(@RequestParam(value = "coursename",required = false) String courseName,@RequestParam(value = "cost") float Cost,@RequestParam(value = "status") int status){
-        httpRequest= courseManagerService.editCourse(courseName,Cost,status);
+        httpRequest= courseManagerService.edit(courseName,Cost,status);
         return httpRequest;
     }
 

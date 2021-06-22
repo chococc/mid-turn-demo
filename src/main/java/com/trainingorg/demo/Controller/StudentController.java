@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class StudentController {
 
-    StudentService studentService =new StudentService();
+    StudentService studentService;
 
     @RequestMapping(value = "/sc")
-    public HttpRequest ChoseClass(@RequestParam(value = "classID",required = false) String classID){
+    public HttpRequest ChoseClass(@RequestParam(value = "classID") String classID){
         return studentService.choseClass(classID);
     }
 
     @RequestMapping(value="/schedule")
-    public HttpRequest schedule(@RequestParam(value = "instance",required = false) String instance){
+    public HttpRequest schedule(@RequestParam(value = "instance") String instance){
         return studentService.getTimeTable(instance);
     }
 
@@ -43,6 +43,6 @@ public class StudentController {
 
     @RequestMapping(value = "/delete")
     public HttpRequest delete(@RequestParam(value = "classID",required = false)String classID){
-        return studentService.deleteClass(classID);
+        return studentService.delete(classID);
     }
 }

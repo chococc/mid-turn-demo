@@ -64,13 +64,12 @@ public class LoginUserDao {
         mysqlActuator.update(SQLUtils.getSql("Users","update",map,false,null));
     }
 
-    public void editUsers_Token(String name,String identity,String phone,String Org) throws Exception{
+    public void editUsers_Token(String name,String phone,String Org) throws Exception{
         Token token=new Token();
         String username=token.Token2Username();
         //mysqlActuator.update("UPDATE Users SET NAME='" + name + "',identify='" + identity + "',telephone='" + phone + "',ORG='" + Org + "' where username='" + editUser_username + "'");
         Map<String,Object> map=new HashMap<>();
         map.put("name",name);
-        map.put("identify",identity);
         map.put("telephone",phone);
         map.put("Org",Org);
         map.put("Key_username",username);

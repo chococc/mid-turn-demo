@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/class")
 public class ClassManagerController {
 
-    ClassManagerService classManagerService=new ClassManagerService();
+    ClassManagerService classManagerService;
+
     @RequestMapping(value = "/add")
     public HttpRequest add(@RequestParam(value = "teacherID") String teacherID,@RequestParam(value = "courseID") String courseID,@RequestParam(value = "startTime") int startWeek,@RequestParam(value = "stopTime") int stopWeek){
         return classManagerService.add(teacherID,courseID,startWeek,stopWeek);
