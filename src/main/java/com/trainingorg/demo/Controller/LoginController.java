@@ -2,22 +2,24 @@ package com.trainingorg.demo.Controller;
 
 import com.trainingorg.demo.Service.LoginService;
 import com.trainingorg.demo.bean.HttpRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.Map;
 
 
 @RestController
 @CrossOrigin
 public class LoginController {
 
-    @Autowired
+    @Resource
     LoginService loginService;
 
     @RequestMapping(value="/login_service")
-    public HttpRequest user_login(@RequestParam("username") String username,@RequestParam("password") String password){
-        System.out.println(username);
-        System.out.println(password);
-        return loginService.login(username,password);
+    public HttpRequest user_login(@RequestBody Map<String,Object> map){
+        System.out.println(map.get("username"));
+        System.out.println(map.get("password"));
+        return loginService.login(map.get("username").toString(),map.get("password").toString());
     }
     @RequestMapping("/checkLoginStatus")
     public HttpRequest check_login() {

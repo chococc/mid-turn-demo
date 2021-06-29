@@ -6,10 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 @RestController
 @RequestMapping(value = "/Org")
 public class OrgController {
 
+    @Resource
     protected OrgService orgService;
 
     @RequestMapping(value="/add")

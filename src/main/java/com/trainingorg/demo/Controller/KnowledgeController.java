@@ -6,13 +6,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 
 @RestController
 @RequestMapping("/knowledge")
 public class KnowledgeController {
 
-    protected HttpRequest httpRequest=new HttpRequest();
+    @Resource
     protected KnowledgeService knowledgeService;
+    protected HttpRequest httpRequest=new HttpRequest();
 
     @RequestMapping("")
     public HttpRequest run(@RequestParam("id") String id){

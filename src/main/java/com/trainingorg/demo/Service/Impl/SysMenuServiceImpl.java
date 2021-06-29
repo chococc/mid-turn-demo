@@ -22,7 +22,7 @@ public class SysMenuServiceImpl implements SysMenuService {
         Map<String, Object> map = new HashMap<>(16);
         Map<String,Object> home = new HashMap<>(16);
         Map<String,Object> logo = new HashMap<>(16);
-        List<MenuEntity.SysMenu> menuList = sysMenuRepository.findAllByStatusOrderBySort(true);
+        List<MenuEntity.SysMenu> menuList = sysMenuRepository.findAllByStatusOrderBySort(1);
         List<MenuEntity.MenuVo> menuInfo = new ArrayList<>();
         for (MenuEntity.SysMenu e : menuList) {
             MenuEntity.MenuVo menuVO = new MenuEntity.MenuVo();
@@ -38,7 +38,7 @@ public class SysMenuServiceImpl implements SysMenuService {
         home.put("title","首页");
         home.put("href","/page/welcome-1");//控制器路由,自行定义
         logo.put("title","后台管理系统");
-        logo.put("image","/static/images/back.jpg");//静态资源文件路径,可使用默认的logo.png 
+        logo.put("image", "/static/images/back.jpg");//静态资源文件路径,可使用默认的logo.png
         map.put("homeInfo", "{title: '首页',href: '/ruge-web-admin/page/welcome.html'}}");
         map.put("logoInfo", "{title: 'RUGE ADMIN',image: 'images/logo.png'}");
         return map;

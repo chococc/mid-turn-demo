@@ -12,5 +12,5 @@ public interface SysMenuRepository extends JpaRepository<MenuEntity.SysMenu, Lon
     @Query(value = "select * from  system_menu where STATUS = 1  ORDER BY  sort ",nativeQuery = true)
     List<MenuEntity.SysMenu> getSystemMenuByStatusAndSort(Integer status, Long sort);
 
-    List<MenuEntity.SysMenu> findAllByStatusOrderBySort(Boolean status);
+    List<MenuEntity.SysMenu> findAllByStatusOrderBySort(Integer status);
 }

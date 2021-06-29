@@ -4,12 +4,15 @@ import com.trainingorg.demo.Service.UserService;
 import com.trainingorg.demo.bean.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/users")
 
 public class UserManageController {
 
+    @Resource
     protected UserService userService;
 
     @RequestMapping("/add")

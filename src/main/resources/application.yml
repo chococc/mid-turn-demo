@@ -32,8 +32,7 @@ spring:
   thymeleaf:
     cache: false
     enabled: true
-    prefix: classpath:/templates/
-    suffix: .html
+    prefix: classpath:/templates/page/
     #严格执行H5标准
     mode: LEGACYHTML5
     encoding: UTF-8
@@ -43,8 +42,7 @@ spring:
   #静态资源路径
   mvc:
     view:
-      prefix: classpath:/static/page/
-      suffix: .html
+      prefix: classpath:/static/
   web:
     resources:
       chain:
@@ -66,8 +64,6 @@ server:
     threads:
       min-spare: 10
       max: 220
-
-
 
 #配置日志文件参数
 logging:

@@ -22,7 +22,7 @@ class MidTurnDemoApplicationTests {
     @Test
 
     void AccessCodeTest() {
-        System.out.println(loginService.login("test","pass").getRequestMessage());
+        System.out.println(loginService.login("test","pass").getMsg());
     }
 
     @Test

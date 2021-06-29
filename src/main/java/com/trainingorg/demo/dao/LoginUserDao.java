@@ -83,4 +83,8 @@ public class LoginUserDao {
     public UserEntity selectAllByID(String username) throws Exception{
         return mysqlActuator.get(UserEntity.class, "SELECT * from Users where username='"+username+"'");
     }
+
+    public int allCount() throws  Exception{
+        return mysqlActuator.getForValue("SELECT COUNT(*) from Users");
+    }
 }

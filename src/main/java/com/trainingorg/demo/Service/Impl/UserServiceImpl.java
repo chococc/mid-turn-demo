@@ -137,6 +137,7 @@ public class UserServiceImpl implements UserService {
         try {
             new Token().IdentityCheck("OrgManager");
             httpRequest.setData(loginUserDao.selectAll());
+            httpRequest.setCount(loginUserDao.allCount());
             httpRequest.setCode(200);
             httpRequest.setRequestMessage("用户信息拉取成功");
         }catch (NoToken n) {

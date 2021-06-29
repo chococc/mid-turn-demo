@@ -200,13 +200,43 @@ public class MysqlActuator {
     }
 
     /**
-     * Traditional Result，return more than one values（count is available）
+     * Traditional Result，return one value（count is available）
      *
      * param sql,args
      * return value
      */
     @SuppressWarnings("unchecked")
-    public <E> List<E> getForValue(String sql, Object... args) throws SQLException,NullPointerException {
+    public <E>E getForValue(String sql, Object... args) throws SQLException,NullPointerException {
+        Connection connection;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet;
+        E result;
+        connection = mysqlConnector.getConnection();
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        for (int i = 0; i < args.length; i++) {
+            assert preparedStatement != null;
+            preparedStatement.setObject(i + 1, args[i]);
+        }
+        assert preparedStatement != null;
+        resultSet = preparedStatement.executeQuery();
+        result=(E)resultSet.getObject(1);
+        mysqlConnector.release(resultSet, preparedStatement, connection);
+        return result;
+    }
+
+    /**
+     * Traditional Result，return more than one values（count is available）
+     *
+     * param sql,args
+     * return values
+     */
+
+    @SuppressWarnings("unchecked")
+    public <E> List<E> getForValueList(String sql, Object... args) throws SQLException,NullPointerException {
         Connection connection;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet;
@@ -226,6 +256,7 @@ public class MysqlActuator {
         resultSet = preparedStatement.executeQuery();
         while(resultSet.next()) {
             list.add((E)resultSet.getObject(j));
+            j++;
         }
         mysqlConnector.release(resultSet, preparedStatement, connection);
         return list;
